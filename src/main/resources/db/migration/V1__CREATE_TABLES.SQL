@@ -1,49 +1,44 @@
-create TABLE Users (
-    UserID int NOT NULL PRIMARY KEY,
+CREATE TABLE Users (
+    id BIGINT NOT NULL PRIMARY KEY,
     LastName varchar(255) NOT NULL,
     FirstName varchar(255),
     Email varchar(255),
-    Login varchar(255);
-    Passwors int NOT NULL,
-    MobileNumber int,
-    Photo???
+    Login varchar(255) NOT NULL,
+    Password BIGINT NOT NULL,
+    MobileNumber BIGINT,
+    Photo BLOB
 );
-create TABLE Announcement (
-    AnnouncementID int NOT NULL PRIMARY KEY,
-    Category_id int NOT NULL,
-    FOREIGN KEY (Category_id)  REFERENCES Category_id (Category_idID),
+CREATE TABLE Announcement (
+    id BIGINT NOT NULL PRIMARY KEY,
+    CategoryId int REFERENCES Category (id) NOT NULL,
     Title varchar(255),
-    User_id int NOT NULL,
-    FOREIGN KEY (User_id)  REFERENCES Users (UserID),
+    UserId int REFERENCES Users (id) NOT NULL,
     Description varchar(512),
-    Location_id int NOT NULL,
-    FOREIGN KEY (Location_id)  REFERENCES Location_id (Loction_idID),
-    cost int
+    LocationId int REFERENCES Location (id) NOT NULL,
+    Cost int
 
 );
 
 create TABLE PhotoAnnouncement (
-    PhotoAnnouncementID int NOT NULL PRIMARY KEY;
-    Announcement_id int NOT NULL,
-    FOREIGN KEY (Announcement_id)  REFERENCES Announcement (AnnouncementID),
-    src??
+    id BIGINT NOT NULL PRIMARY KEY;
+    AnnouncementId int  REFERENCES Announcement (id) NOT NULL,
+    src BLOB
 );
 
-create TABLE Category_id (
-    Category_idID int NOT NULL PRIMARY KEY;
+create TABLE Category (
+    id BIGINT NOT NULL PRIMARY KEY;
     Title varchar(255),
-    Features_id varchar(255)
-    FOREIGN KEY (Features_id)  REFERENCES Features_id (Features_idID),
+    FeaturesId varchar(255) REFERENCES Features (id),
 );
 
-create TABLE Location_id (
-    Loction_idID int NOT NULL PRIMARY KEY;
+create TABLE Location (
+    id BIGINT NOT NULL PRIMARY KEY;
     City varchar(255),
     Street varchar(255)
 );
 
-create TABLE Features_id (
-    Features_idID int NOT NULL PRIMARY KEY;
+create TABLE Features (
+    id BIGINT NOT NULL PRIMARY KEY;
    ???
 );
 
