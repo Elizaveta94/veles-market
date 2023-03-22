@@ -4,11 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.annotation.Id;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -16,8 +13,8 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
-
-public class UsersEntity {
+@Table(name = "VelesUser")
+public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,7 +44,7 @@ public class UsersEntity {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        UsersEntity other = (UsersEntity) obj;
+        UserEntity other = (UserEntity) obj;
         return Objects.equals(id, other.getId());
     }
 }

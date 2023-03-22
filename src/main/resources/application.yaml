@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  datasource:
+    password: postgrespw
+    username: postgres
+    url: jdbc:postgresql://localhost:49153/velesbd

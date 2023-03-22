@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
-import org.springframework.data.annotation.Id;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -15,6 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "Category")
 public class CategoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +21,9 @@ public class CategoryEntity {
     private String title;
     private String featuresId;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn
-    @Fetch(FetchMode.SUBSELECT)
-    private List<AnnouncementEntity> announcement;
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @Fetch(FetchMode.SUBSELECT)
+//    private List<AnnouncementEntity> announcement;
 
     @Override
     public int hashCode() {

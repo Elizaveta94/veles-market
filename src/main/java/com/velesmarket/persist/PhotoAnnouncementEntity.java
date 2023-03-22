@@ -5,14 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
-
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "PhotoAnnouncement")
 public class PhotoAnnouncementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
