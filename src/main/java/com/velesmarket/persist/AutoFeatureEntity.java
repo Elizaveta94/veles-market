@@ -4,26 +4,29 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import java.util.List;
+
 import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Category")
-public class CategoryEntity {
+@Table(name = "AutoFeature")
+public class AutoFeatureEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    private String featureTable;
+    private String fuelType;
+    private String engineCapacity;
+    private String mileage;
+    private String autoCategory;
+    private int year;
+    private String brand;
+    private String model;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    private List<AnnouncementEntity> announcement;
+    @OneToOne
+    @JoinColumn(name = "AnnouncementId")
+    private AnnouncementEntity announcement;
 
     @Override
     public int hashCode() {
@@ -38,7 +41,7 @@ public class CategoryEntity {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        CategoryEntity other = (CategoryEntity) obj;
+        AutoFeatureEntity other = (AutoFeatureEntity) obj;
         return Objects.equals(id, other.getId());
     }
 }

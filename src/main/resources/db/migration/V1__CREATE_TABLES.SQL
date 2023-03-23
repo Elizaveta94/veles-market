@@ -13,7 +13,7 @@ CREATE TABLE Category (
     id BIGINT NOT NULL PRIMARY KEY,
     title VARCHAR(255),
     parentId BIGINT REFERENCES Category (id),
-    featuresTable VARCHAR(32)
+    featureTable VARCHAR(32)
 );
 
 CREATE TABLE Location (
