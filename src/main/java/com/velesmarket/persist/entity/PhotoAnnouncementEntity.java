@@ -1,4 +1,4 @@
-package com.velesmarket.persist;
+package com.velesmarket.persist.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,15 +11,16 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "PhotoAnnouncement")
+@Table(name = "photo_announcement")
+@SequenceGenerator(name = "photo_announcement_id_seq", sequenceName = "photo_announcement_id_seq", allocationSize = 1, initialValue = 1)
 public class PhotoAnnouncementEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "photo_announcement_id_seq")
     private Long id;
     private byte[] src;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "announcement_id")
     @ToString.Exclude
     private AnnouncementEntity announcement;
 

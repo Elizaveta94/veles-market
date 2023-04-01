@@ -1,4 +1,4 @@
-package com.velesmarket.persist;
+package com.velesmarket.persist.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -15,31 +15,31 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Announcement")
+@Table(name = "announcement")
+@SequenceGenerator(name = "announcement_id_seq", sequenceName = "announcement_id_seq", allocationSize = 1, initialValue = 1)
 public class AnnouncementEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "announcement_id_seq")
     private Long id;
     private String title;
     private String description;
     private int cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     @ToString.Exclude
-    private UserEntity users;
+    private UserEntity user;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn
+    @OneToMany(mappedBy = "announcement")
     @Fetch(FetchMode.SUBSELECT)
-    private List<PhotoAnnouncementEntity> photoAnnouncement;
+    private List<PhotoAnnouncementEntity> photosAnnouncement;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "locationId")
+    @JoinColumn(name = "location_id")
     private LocationEntity location;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "category_id")
     @ToString.Exclude
     private CategoryEntity category;
 

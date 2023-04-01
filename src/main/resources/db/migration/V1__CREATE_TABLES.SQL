@@ -1,79 +1,95 @@
-CREATE TABLE VelesUser (
+CREATE SEQUENCE veles_user_id_seq;
+
+CREATE TABLE veles_user (
     id BIGINT NOT NULL PRIMARY KEY,
-    lastName VARCHAR(255) NOT NULL,
-    firstName VARCHAR(255),
-    email VARCHAR(255),
-    login VARCHAR(255) NOT NULL,
-    password BIGINT NOT NULL,
-    mobileNumber BIGINT,
+    last_name VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE ,
+    login VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    mobile_number BIGINT UNIQUE,
     photo BYTEA
 );
 
-CREATE TABLE Category (
+CREATE SEQUENCE category_id_seq;
+
+CREATE TABLE category (
     id BIGINT NOT NULL PRIMARY KEY,
     title VARCHAR(255),
-    parentId BIGINT REFERENCES Category (id),
-    featureTable VARCHAR(32)
+    parent_id BIGINT REFERENCES category (id),
+    feature_table VARCHAR(32)
 );
 
-CREATE TABLE Location (
+CREATE SEQUENCE location_id_seq;
+
+CREATE TABLE location (
     id BIGINT NOT NULL PRIMARY KEY,
     city VARCHAR(255),
     street VARCHAR(255)
 );
 
-CREATE TABLE Announcement (
+CREATE SEQUENCE announcement_id_seq;
+
+CREATE TABLE announcement (
     id BIGINT NOT NULL PRIMARY KEY,
-    categoryId BIGINT REFERENCES Category (id) NOT NULL,
+    category_id BIGINT REFERENCES category (id) NOT NULL,
     title VARCHAR(255),
-    userId BIGINT REFERENCES VelesUser (id) NOT NULL,
+    user_id BIGINT REFERENCES veles_user (id) NOT NULL,
     description VARCHAR(512),
-    locationId BIGINT REFERENCES Location (id) NOT NULL,
+    location_id BIGINT REFERENCES location (id) NOT NULL,
     cost INT
 );
 
-CREATE TABLE PhotoAnnouncement (
+CREATE SEQUENCE photo_announcement_id_seq;
+
+CREATE TABLE photo_announcement (
     id BIGINT NOT NULL PRIMARY KEY,
-    announcementId BIGINT  REFERENCES Announcement (id) NOT NULL,
+    announcement_id BIGINT  REFERENCES announcement (id) NOT NULL,
     src BYTEA
 );
 
-CREATE TABLE TvFeature (
+CREATE SEQUENCE tv_feature_id_seq;
+
+CREATE TABLE tv_feature (
     id BIGINT NOT NULL PRIMARY KEY,
-    announcementId BIGINT  REFERENCES Announcement (id) NOT NULL,
-    screenType VARCHAR(255),
+    announcement_id BIGINT  REFERENCES announcement (id) NOT NULL,
+    screen_type VARCHAR(255),
     resolution VARCHAR(255),
-    smartTv VARCHAR(255),
-    refreshRate VARCHAR(255),
+    smart_tv VARCHAR(255),
+    refresh_rate VARCHAR(255),
     diagonal VARCHAR(255),
     year INT,
     brand VARCHAR(255),
     model VARCHAR(255)
 );
 
-CREATE TABLE ComputerFeature (
+CREATE SEQUENCE computer_feature_id_seq;
+
+CREATE TABLE computer_feature (
     id BIGINT NOT NULL PRIMARY KEY,
-    announcementId BIGINT  REFERENCES Announcement (id) NOT NULL,
-    screenType VARCHAR(255),
+    announcement_id BIGINT  REFERENCES announcement (id) NOT NULL,
+    screen_type VARCHAR(255),
     resolution VARCHAR(255),
     ram VARCHAR(255),
     processor VARCHAR(255),
     diagonal VARCHAR(255),
-    graphicsCard VARCHAR(255),
-    hardDisk VARCHAR(255),
-    hardDiskType VARCHAR(255),
+    graphics_card VARCHAR(255),
+    hard_disk VARCHAR(255),
+    hard_disk_type VARCHAR(255),
     year INT,
     brand VARCHAR(255),
     model VARCHAR(255)
 );
 
-CREATE TABLE AutoFeature (
+CREATE SEQUENCE auto_feature_id_seq;
+
+CREATE TABLE auto_feature (
     id BIGINT NOT NULL PRIMARY KEY,
-    announcementId BIGINT  REFERENCES Announcement (id) NOT NULL,
-    fuelType VARCHAR(255),
-    engineCapacity VARCHAR(255),
+    announcement_id BIGINT  REFERENCES announcement (id) NOT NULL,
+    fuel_type VARCHAR(255),
+    engine_capacity VARCHAR(255),
     mileage VARCHAR(255),
-    autoCategory VARCHAR(255),
+    auto_category VARCHAR(255),
     year INT,
     brand VARCHAR(255),
     model VARCHAR(255)

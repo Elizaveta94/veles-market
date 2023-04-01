@@ -1,4 +1,4 @@
-package com.velesmarket.persist;
+package com.velesmarket.persist.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,10 +11,11 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "TvFeature")
+@Table(name = "tv_feature")
+@SequenceGenerator(name = "tv_feature_id_seq", sequenceName = "tv_feature_id_seq", allocationSize = 1, initialValue = 1)
 public class TvFeatureEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tv_feature_id_seq")
     private Long id;
     private String screenType;
     private String resolution;
@@ -26,7 +27,7 @@ public class TvFeatureEntity {
     private String model;
 
     @OneToOne
-    @JoinColumn(name = "AnnouncementId")
+    @JoinColumn(name = "announcement_id")
     private AnnouncementEntity announcement;
 
     @Override

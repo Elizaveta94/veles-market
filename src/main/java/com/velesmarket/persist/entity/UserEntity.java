@@ -1,4 +1,4 @@
-package com.velesmarket.persist;
+package com.velesmarket.persist.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -13,21 +13,21 @@ import java.util.Objects;
 @Setter
 @Getter
 @NoArgsConstructor
-@Table(name = "VelesUser")
+@Table(name = "veles_user")
+@SequenceGenerator(name = "veles_user_id_seq", sequenceName = "veles_user_id_seq", allocationSize = 1, initialValue = 1)
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "veles_user_id_seq")
     private Long id;
     private String lastName;
     private String firstName;
     private String email;
     private String login;
-    private Long password;
+    private String password;
     private Long mobileNumber;
     private byte[] photo;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn
+    @OneToMany(mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)
     private List<AnnouncementEntity> announcement;
 

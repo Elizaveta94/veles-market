@@ -1,11 +1,11 @@
-package com.velesmarket.persist;
+package com.velesmarket.persist.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,17 +13,17 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Location")
-public class LocationEntity {
+@Table(name = "category")
+@SequenceGenerator(name = "category_id_seq", sequenceName = "category_id_seq", allocationSize = 1, initialValue = 1)
+public class CategoryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_id_seq")
     private Long id;
-    private String city;
-    private String street;
+    private String title;
+    private String featureTable;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn
-    @ToString.Exclude
+    @OneToMany(mappedBy = "category")
+    @Fetch(FetchMode.SUBSELECT)
     private List<AnnouncementEntity> announcement;
 
     @Override
@@ -39,8 +39,7 @@ public class LocationEntity {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        LocationEntity other = (LocationEntity) obj;
+        CategoryEntity other = (CategoryEntity) obj;
         return Objects.equals(id, other.getId());
     }
-
 }
