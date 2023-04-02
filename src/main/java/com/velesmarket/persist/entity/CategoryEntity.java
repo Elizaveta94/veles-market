@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +25,11 @@ public class CategoryEntity {
 
     @OneToMany(mappedBy = "category")
     @Fetch(FetchMode.SUBSELECT)
-    private List<AnnouncementEntity> announcement;
+    private List<AnnouncementEntity> announcements;
+
+    @OneToOne
+    @JoinColumn(name = "parent_id")
+    private CategoryEntity parent;
 
     @Override
     public int hashCode() {
