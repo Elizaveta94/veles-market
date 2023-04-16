@@ -1,6 +1,6 @@
 package com.velesmarket.persist.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +18,8 @@ public class AutoFeatureEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auto_feature_id_seq")
     private Long id;
     private String fuelType;
-    private String engineCapacity;
-    private String mileage;
+    private int engineCapacity;
+    private int mileage;
     private String autoCategory;
     private int year;
     private String brand;

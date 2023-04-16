@@ -1,6 +1,6 @@
 package com.velesmarket.persist.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +22,7 @@ public class ComputerFeatureEntity {
     private String ram;
     private String processor;
     private String diagonal;
+    private String computerType;
     private String graphicsCard;
     private String hardDisk;
     private String hardDiskType;

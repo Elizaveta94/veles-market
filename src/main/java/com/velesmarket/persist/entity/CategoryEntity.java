@@ -1,6 +1,6 @@
 package com.velesmarket.persist.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,9 +27,9 @@ public class CategoryEntity {
     @Fetch(FetchMode.SUBSELECT)
     private List<AnnouncementEntity> announcements;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "parent_id")
-    private CategoryEntity parent;
+    private List<CategoryEntity> subCategories;
 
     @Override
     public int hashCode() {
