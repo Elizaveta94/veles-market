@@ -33,7 +33,7 @@ public enum ComputerHardDiskF {
         this.hardDiskName = hardDiskName;
     }
 
-    public List<String> getAllComputerHardDisk() {
+    public static List<String> getAllComputerHardDisk() {
         return Arrays.stream(ComputerHardDiskF.values()).map(ComputerHardDiskF::getHardDiskName).toList();
     }
 

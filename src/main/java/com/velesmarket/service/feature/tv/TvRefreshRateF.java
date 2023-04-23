@@ -16,7 +16,7 @@ public enum TvRefreshRateF {
         this.refreshRateName = refreshRateName;
     }
 
-    public List<String> getAllTvRefreshRate() {
+    public static List<String> getAllTvRefreshRate() {
         return Arrays.stream(TvRefreshRateF.values()).map(TvRefreshRateF::getRefreshRateName).toList();
     }
 }

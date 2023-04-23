@@ -64,7 +64,7 @@ public enum AutoBrandF {
         this.brandName = brandName;
     }
 
-    public List<String> getAllAutoBrand() {
+    public static List<String> getAllAutoBrand() {
         return Arrays.stream(AutoBrandF.values()).map(AutoBrandF::getBrandName).toList();
     }
 }

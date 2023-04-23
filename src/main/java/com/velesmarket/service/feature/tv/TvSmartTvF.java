@@ -29,7 +29,7 @@ public enum TvSmartTvF {
         this.smartTvName = smartTvName;
     }
 
-    public List<String> getAllTvSmartTv() {
+    public static List<String> getAllTvSmartTv() {
         return Arrays.stream(TvSmartTvF.values()).map(TvSmartTvF::getSmartTvName).toList();
     }
 }

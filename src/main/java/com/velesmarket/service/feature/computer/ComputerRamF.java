@@ -19,7 +19,7 @@ public enum ComputerRamF {
         this.ramName = ramName;
     }
 
-    public List<String> getAllComputerRam() {
+    public static List<String> getAllComputerRam() {
         return Arrays.stream(ComputerRamF.values()).map(ComputerRamF::getRamName).toList();
     }
 }

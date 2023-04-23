@@ -46,7 +46,7 @@ public enum ComputerBrandF {
         this.brandName = brandName;
     }
 
-    public List<String> getAllComputerBrand() {
+    public static List<String> getAllComputerBrand() {
         return Arrays.stream(ComputerBrandF.values()).map(ComputerBrandF::getBrandName).toList();
     }
 

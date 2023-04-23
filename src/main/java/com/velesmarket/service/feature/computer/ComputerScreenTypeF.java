@@ -19,7 +19,7 @@ public enum ComputerScreenTypeF {
         this.screenTypeName = screenTypeName;
     }
 
-    public List<String> getAllComputerScreenType() {
+    public static List<String> getAllComputerScreenType() {
         return Arrays.stream(ComputerScreenTypeF.values()).map(ComputerScreenTypeF::getScreenTypeName).toList();
     }
 }

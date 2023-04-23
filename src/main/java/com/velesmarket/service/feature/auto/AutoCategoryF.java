@@ -18,7 +18,7 @@ public enum AutoCategoryF {
         this.categoryName = categoryName;
     }
 
-    public List<String> getAllAutoCategory() {
+    public static List<String> getAllAutoCategory() {
         return Arrays.stream(AutoCategoryF.values()).map(AutoCategoryF::getCategoryName).toList();
     }
 }

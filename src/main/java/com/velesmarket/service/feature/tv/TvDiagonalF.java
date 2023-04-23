@@ -25,7 +25,7 @@ public enum TvDiagonalF {
         this.diagonalName = diagonalName;
     }
 
-    public List<String> getAllTvDiagonal() {
+    public static List<String> getAllTvDiagonal() {
         return Arrays.stream(TvDiagonalF.values()).map(TvDiagonalF::getDiagonalName).toList();
     }
 }

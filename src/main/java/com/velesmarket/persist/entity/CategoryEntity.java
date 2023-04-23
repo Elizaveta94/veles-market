@@ -21,7 +21,7 @@ public class CategoryEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_id_seq")
     private Long id;
     private String title;
-    private String featureTable;
+    private String featureCategory;
 
     @OneToMany(mappedBy = "category")
     @Fetch(FetchMode.SUBSELECT)

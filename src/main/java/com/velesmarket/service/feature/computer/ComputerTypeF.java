@@ -15,7 +15,7 @@ public enum ComputerTypeF {
         this.computerTypeName = computerTypeName;
     }
 
-    public List<String> getAllComputerType() {
+    public static List<String> getAllComputerType() {
         return Arrays.stream(ComputerTypeF.values()).map(ComputerTypeF::getComputerTypeName).toList();
     }
 }

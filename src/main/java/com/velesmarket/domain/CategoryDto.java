@@ -10,6 +10,6 @@ import java.util.List;
 public class CategoryDto {
     private Long id;
     private String title;
-    private String featureTable;
+    private String featureCategory;
     private List<CategoryDto> subCategories;
 }

@@ -17,7 +17,7 @@ CREATE TABLE category (
     id BIGINT NOT NULL PRIMARY KEY,
     title VARCHAR(255),
     parent_id BIGINT REFERENCES category (id),
-    feature_table VARCHAR(32)
+    feature_category VARCHAR(32)
 );
 
 CREATE SEQUENCE location_id_seq;

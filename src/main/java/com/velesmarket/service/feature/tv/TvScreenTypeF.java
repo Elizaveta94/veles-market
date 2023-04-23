@@ -20,7 +20,7 @@ public enum TvScreenTypeF {
         this.screenTypeName = screenTypeName;
     }
 
-    public List<String> getAllTvScreenType() {
+    public static List<String> getAllTvScreenType() {
         return Arrays.stream(TvScreenTypeF.values()).map(TvScreenTypeF::getScreenTypeName).toList();
     }
 }

@@ -38,7 +38,7 @@ public enum TvBrandF {
         this.brandName = brandName;
     }
 
-    public List<String> getAllTvBrand() {
+    public static List<String> getAllTvBrand() {
         return Arrays.stream(TvBrandF.values()).map(TvBrandF::getBrandName).toList();
     }
 }

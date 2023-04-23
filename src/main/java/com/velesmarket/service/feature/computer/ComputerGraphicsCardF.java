@@ -29,7 +29,7 @@ public enum ComputerGraphicsCardF {
         this.graphicsCardName = graphicsCardName;
     }
 
-    public List<String> getAllComputerGraphicsCard() {
+    public static List<String> getAllComputerGraphicsCard() {
         return Arrays.stream(ComputerGraphicsCardF.values()).map(ComputerGraphicsCardF::getGraphicsCardName).toList();
     }
 }

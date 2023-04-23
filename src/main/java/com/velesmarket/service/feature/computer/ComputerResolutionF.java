@@ -40,7 +40,7 @@ public enum ComputerResolutionF {
         this.resolutionName = resolutionName;
     }
 
-    public List<String> getAllComputerResolution() {
+    public static List<String> getAllComputerResolution() {
         return Arrays.stream(ComputerResolutionF.values()).map(ComputerResolutionF::getResolutionName).toList();
     }
 

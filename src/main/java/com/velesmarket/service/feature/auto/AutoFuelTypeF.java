@@ -19,7 +19,7 @@ public enum AutoFuelTypeF {
         this.fuelName = fuelName;
     }
 
-    public List<String> getAllFuelTypes() {
+    public static List<String> getAllFuelTypes() {
         return Arrays.stream(AutoFuelTypeF.values()).map(AutoFuelTypeF::getFuelName).toList();
     }
 

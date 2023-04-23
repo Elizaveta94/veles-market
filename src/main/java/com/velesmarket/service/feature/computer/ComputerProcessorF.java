@@ -25,7 +25,7 @@ public enum ComputerProcessorF {
         this.ProcessorName = ProcessorName;
     }
 
-    public List<String> getAllComputerProcessor() {
+    public static List<String> getAllComputerProcessor() {
 
         return Arrays.stream(ComputerProcessorF.values()).map(ComputerProcessorF::getProcessorName).toList();
     }

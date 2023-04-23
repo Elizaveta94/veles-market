@@ -24,7 +24,7 @@ public enum ComputerDiagonalF {
         this.diagonalName = diagonalName;
     }
 
-    public List<String> getAllComputerDiagonal() {
+    public static List<String> getAllComputerDiagonal() {
         return Arrays.stream(ComputerDiagonalF.values()).map(ComputerDiagonalF::getDiagonalName).toList();
     }
 }

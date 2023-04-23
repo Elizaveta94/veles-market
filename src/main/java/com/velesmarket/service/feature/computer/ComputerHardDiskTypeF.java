@@ -19,7 +19,7 @@ public enum ComputerHardDiskTypeF {
         this.hardDiskTypeName = hardDiskTypeName;
     }
 
-    public List<String> getAllComputerHardDiskType() {
+    public static List<String> getAllComputerHardDiskType() {
         return Arrays.stream(ComputerHardDiskTypeF.values()).map(ComputerHardDiskTypeF::getHardDiskTypeName).toList();
     }
 }

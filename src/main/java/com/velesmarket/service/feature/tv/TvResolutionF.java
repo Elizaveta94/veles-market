@@ -25,7 +25,7 @@ public enum TvResolutionF {
         this.resolutionName = resolutionName;
     }
 
-    public List<String> getAllTvResolution() {
+    public static List<String> getAllTvResolution() {
         return Arrays.stream(TvResolutionF.values()).map(TvResolutionF::getResolutionName).toList();
     }
 
