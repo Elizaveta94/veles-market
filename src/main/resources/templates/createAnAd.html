@@ -1,0 +1,91 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Spring Boot App</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
+</head>
+<body>
+<style>
+   body {
+    background: url(https://abrakadabra.fun/uploads/posts/2021-11/1636778628_37-abrakadabra-fun-p-fon-dlya-tovarov-internet-magazina-40.jpg) no-repeat;
+    -moz-background-size: 100%;
+    -webkit-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    background-attachment: fixed;
+   }
+
+p {
+    width: 1400px;	height: 150px;
+    outline: 2px dashed #808080;
+    background: #f0ffff;
+   }
+
+h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 250%;
+   }
+
+
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <nav class="navbar bg-body-tertiary">
+            <div class="container-fluid" style="font-family: cursive;">
+                <a class="navbar-brand" href="#" style="font-size: 250%">
+                    <img src="https://media.istockphoto.com/id/1184211010/ru/%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F/vs-%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2-%D0%B1%D1%83%D0%BA%D0%B2-%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80-%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF-%D0%B8%D0%B7%D0%BE%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D1%8B-%D0%BD%D0%B0-%D0%BF%D1%80%D0%BE%D0%B7%D1%80%D0%B0%D1%87%D0%BD%D0%BE%D0%BC-%D1%84%D0%BE%D0%BD%D0%B5-vs-%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2-%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D0%B0.jpg?s=612x612&w=0&k=20&c=hQXwBq60sQutxLGbxYut89ru5FtJ_fVt1dJqkGkjqA0="
+                         width="70" height="70" class="d-inline-block align-top" alt="">
+                    Veles Market
+                </a>
+
+            </div>
+        </nav>
+    </div>
+</nav>
+
+<h1 class="fs-4" style="margin:5px 100px 5px">Posting an announcement</h1>
+<h2 class="fs-4" style="margin:5px 100px 5px">Photos</h2>
+<p style="margin:5px 80px 5px">
+
+    <input type="file" placeholder="Add photos" name="photo"
+           style="width:250px;height:45px;background: 	#1E90FF;margin-left: 20;margin-top:20" class="btn btn-success"
+           multiple>
+
+    <br> <font style="margin-left:20" size="3" color="#C0C0C0" face="serif">Use real photos of your product from
+    different angles.Maximum
+    number of photos: 5.</font></br>
+</p>
+<div class="mb-3">
+    <b><label for="formGroupExampleInput" class="form-label" style="margin:5px 100px 5px">Product/service name*</label></b>
+    <input type="text" class="form-control" style="width: 300px;height:45px;margin:5px 100px 5px"
+           id="formGroupExampleInput" placeholder="For example, TV">
+</div>
+
+<br><b><label style="margin:5px 100px 5px">Category
+    selection*</label></b></br>
+
+<div class="btn-group dropend">
+
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-expanded="false"
+            style="margin:5px 100px 5px; width: 200px;height:45px; background: #008EB0; color: #ffffff;">
+        Category
+    </button>
+
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+    </ul>
+</div>
+
+<div class="mb-3">
+    <b><label for="formGroupExampleInput" class="form-label" style="margin:5px 100px 5px">Description</label></b>
+    <input type="text" class="form-control" style="width: 500px;height:300px;margin:5px 100px 5px">
+</div>
+</body>
+</html>
