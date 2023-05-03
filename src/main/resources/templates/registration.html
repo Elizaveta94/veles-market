@@ -16,7 +16,6 @@
     background-size: 100%;
     background-attachment: fixed;
    }
-
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -33,52 +32,50 @@
         </nav>
     </div>
 </nav>
-<form class="row g-3">
-    <div class="col-md-6">
-        <b><label for="inputFirstName4" class="form-label" style="margin-left: 450">First name</label></b>
-        <input type="text" class="form-control" id="inputFirstName4" style="margin-left: 450; width: 270px;height:40px">
-    </div>
+<div class="container" style="max-width: 800px; margin-left: auto; margin-right: auto">
+    <form class="row g-3" action="#" th:action="@{/registration}" th:object="${user}" method="post">
+        <div class="col-12">
+            <b><label for="inputFirstName4" class="form-label">First name</label></b>
+            <input type="text" class="form-control" id="inputFirstName4" th:field="*{firstName}"
+                   style="width: 590px;height:40px">
+        </div>
 
-    <div class="col-md-6">
-        <b><label for="inputLastName4" class="form-label" style="margin-right: 350">Last Name</label></b>
-        <input type="text" class="form-control" id="inputLastName4" style="margin-right: 350; width: 270px;height:40px">
-    </div>
+        <div class="col-12">
+            <b><label for="inputLastName4" class="form-label">Last Name</label></b>
+            <input type="text" class="form-control" id="inputLastName4" th:field="*{lastName}"
+                   style="width: 590px;height:40px">
+        </div>
 
-    <div class=" col-12">
-        <b><label for="inputEmail" class="form-label" style="margin-left: 450">Email</label></b>
-        <input type="text" class="form-control" id="inputEmail" placeholder="@gamil.com"
-               style="margin-left: 450; width: 590px;height:40px">
-    </div>
+        <div class="col-12">
+            <b><label for="inputEmail" class="form-label" >Email</label></b>
+            <input type="text" class="form-control" id="inputEmail" placeholder="@gamil.com" th:field="*{email}"
+                   style="width: 590px;height:40px">
+        </div>
 
-    <div class="col-md-6">
-        <b><label for="inputLogin" class="form-label" style="margin-left: 450">Login</label></b>
-        <input type="text" class="form-control" id="inputLogin" style="margin-left: 450; width: 270px;height:40px">
-    </div>
+        <div class="col-12">
+            <b><label for="inputLogin" class="form-label">Login</label></b>
+            <input type="text" class="form-control" id="inputLogin" style="width: 590px;height:40px" th:field="*{login}">
+        </div>
 
-    <div class="col-md-6">
-        <b><label for="inputPassword" class="form-label" style="margin-right: 350">Password</label></b>
-        <input type="password" class="form-control" id="inputPassword"
-               style="margin-right: 350; width: 270px;height:40px">
-    </div>
+        <div class="col-12">
+            <b><label for="inputPassword" class="form-label">Password</label></b>
+            <input type="password" class="form-control" id="inputPassword" th:field="*{password}"
+                   style="width: 590px;height:40px">
+        </div>
 
-    <div class=" col-12">
-        <b><label for="inputMobileNumber" class="form-label" style="margin-left: 450">Mobile number</label></b>
-        <input type="text" class="form-control" id="inputMobileNumber" placeholder="+375xx"
-               style="margin-left: 450; width: 590px;height:40px">
-    </div>
+        <div class="col-12">
+            <b><label for="inputMobileNumber" class="form-label">Mobile number</label></b>
+            <input type="text" class="form-control" id="inputMobileNumber" placeholder="375xx" th:field="*{mobileNumber}"
+                   style="width: 590px;height:40px">
+        </div>
 
-    <div class=" col-12">
-        <b><label for="inputLocation" class="form-label" style="margin-left: 450">Location</label></b>
-        <input type="text" class="form-control" id="inputLocation"
-               placeholder="Enter your region, city, street" style="margin-left: 450; width: 590px;height:40px">
-    </div>
-
-    <div class=" col-12">
-        <button type="submit" class="btn btn-primary" style=" background: #008EB0; color: #ffffff;margin-left: 450">
-            Register
-        </button>
-    </div>
-</form>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary" style=" background: #008EB0; color: #ffffff;margin-left: 450">
+                Register
+            </button>
+        </div>
+    </form>
+</div>
 
 
 <!-- Bootstrap JS -->

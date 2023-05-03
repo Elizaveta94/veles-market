@@ -40,23 +40,23 @@ form {border: 10px solid #f1f1f1; background-color: #ffffff; margin:10px 550px 1
 
 <ul class="list-group list-group-horizontal">
     <li class="list-group-item" style="margin-left:150;width:300px;height:40px">First name</li>
-    <li class="list-group-item" style="width:300px;height:40px"></li>
+    <li class="list-group-item" style="width:300px;height:40px" th:text="${user.firstName}"></li>
 </ul>
 <ul class="list-group list-group-horizontal-sm">
     <li class="list-group-item" style="margin-left:150;width:300px;height:40px">Last name</li>
-    <li class="list-group-item" style="width:300px;height:40px"></li>
+    <li class="list-group-item" style="width:300px;height:40px" th:text="${user.lastName}"></li>
+</ul>
+<ul class="list-group list-group-horizontal-sm">
+    <li class="list-group-item" style="margin-left:150;width:300px;height:40px">Login</li>
+    <li class="list-group-item" style="width:300px;height:40px" th:text="${user.login}"></li>
 </ul>
 <ul class="list-group list-group-horizontal-sm">
     <li class="list-group-item" style="margin-left:150;width:300px;height:40px">Email</li>
-    <li class="list-group-item" style="width:300px;height:40px"></li>
+    <li class="list-group-item" style="width:300px;height:40px" th:text="${user.email}"></li>
 </ul>
 <ul class="list-group list-group-horizontal-sm">
     <li class="list-group-item" style="margin-left:150;width:300px;height:40px">Mobile number</li>
-    <li class="list-group-item" style=";width:300px;height:40px"></li>
-</ul>
-<ul class="list-group list-group-horizontal-sm">
-    <li class="list-group-item" style="margin-left:150;width:300px;height:40px">Location</li>
-    <li class="list-group-item" style="width:300px;height:40px"></li>
+    <li class="list-group-item" style=";width:300px;height:40px" th:text="${user.mobileNumber}"></li>
 </ul>
 
 <button type="button" class="btn btn-success"
