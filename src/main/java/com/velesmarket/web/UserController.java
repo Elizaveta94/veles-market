@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.Principal;
+
 @Controller
 @RequiredArgsConstructor
 public class UserController {
@@ -29,20 +31,14 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("user", new UserDto());
+    public String login() {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@ModelAttribute UserDto user, Model model) {
-        UserDto newUser = userService.login(user);
-        model.addAttribute("user", newUser);
-        return "userProfile";
-    }
-
     @GetMapping("/profile")
-    public String profile() {
+    public String profile(Principal principal, Model model) {
+        UserDto user = userService.getUser(principal.getName());
+        model.addAttribute("user", user);
         return "userProfile";
     }
 

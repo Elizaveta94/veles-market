@@ -58,12 +58,13 @@ h2 {
     different angles.Maximum
     number of photos: 5.</font></br>
 </p>
+<form class="row g-3" action="#" th:action="@{/create}" th:object="${announcement}" method="post">
 <div class="mb-3">
     <b><label for="formGroupExampleInput" class="form-label" style="margin:5px 100px 5px">Product/service name*</label></b>
     <input type="text" class="form-control" style="width: 300px;height:45px;margin:5px 100px 5px"
-           id="formGroupExampleInput" placeholder="For example, TV">
+           id="formGroupExampleInput" th:field="*{title}" placeholder="For example, TV">
 </div>
-
+</form>
 <br><b><label style="margin:5px 100px 5px">Category
     selection*</label></b></br>
 
@@ -82,19 +83,19 @@ h2 {
         <li><a class="dropdown-item" href="#">Something else here</a></li>
     </ul>
 </div>
-
+<form class="row g-3" action="#" th:action="@{/create}" th:object="${announcement}" method="post">
 <div class="mb-3">
     <b><label for="formGroupExampleInput" class="form-label" style="margin:5px 100px 5px">Description</label></b>
-    <input type="text" class="form-control" style="width: 500px;height:300px;margin:5px 100px 5px">
+    <input type="text" class="form-control" th:field="*{description}" style="width: 500px;height:300px;margin:5px 100px 5px">
 </div>
 
 <div class=" col-12">
     <b><label for="inputLocationCity" class="form-label" style="margin-left: 450">Location</label></b>
-    <input type="text" class="form-control" id="inputLocationCity"
+    <input type="text" class="form-control" id="inputLocationCity" th:field="*{city}"
            placeholder="Enter your city" style="margin-left: 450; width: 590px;height:40px">
-    <input type="text" class="form-control" id="inputLocationStreet"
+    <input type="text" class="form-control" id="inputLocationStreet" th:field="*{street}"
            placeholder="Enter your street" style="margin-left: 450; width: 590px; height:40px; margin-top: 10">
 </div>
-
+</form>
 </body>
 </html>

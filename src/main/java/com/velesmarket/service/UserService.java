@@ -1,11 +1,10 @@
 package com.velesmarket.service;
 
 import com.velesmarket.domain.UserDto;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
-    UserDto login(UserDto userDto);
+    UserDto getUser(String login);
 
     UserDto registrate(UserDto userDto);
 
