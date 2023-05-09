@@ -11,9 +11,9 @@ public class HelloController {
         return "mainPage";
     }
 
-    @GetMapping("/create")
-    public String createAd() {
-        return "createAnAd";
+    @GetMapping("/announcements")
+    public String getAnnouncement() {
+        return "announcement";
     }
 
 }

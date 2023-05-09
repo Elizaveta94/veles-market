@@ -43,7 +43,7 @@
                                     style="width:90px;height:45px;margin-right: 10;">
                                 Search
                             </button>
-                            <button onclick="document.location='create'" type="button" class="btn btn-success"
+                            <button onclick="document.location='announcement/create'" type="button" class="btn btn-success"
                                     style="width:200px;height:45px;background: #008EB0;margin-right: 10;">Place an
                                 announcement
                             </button>
@@ -53,10 +53,18 @@
                             <button onclick="document.location='registration'" type="button" class="btn btn-success"
                                     style="width:100px;height:45px;background: #008EB0;margin-right: 10">Sign up
                             </button>
+
+
                             <button onclick="document.location='profile'" type="button" class="btn btn-success"
                                     style="width:100px;height:45px;background: rgba(30, 52, 142, 0.5);margin-right: 10">My profile
                             </button>
+
+                            <button onclick="document.location='/'" type="button" class="btn btn-success" th:href="@{/logout}"
+                                    style="width:100px;height:45px;background: #008EB0;margin-right: 10">Sign out
+                            </button>
+
                         </div>
+
                     </div>
                 </li>
             </ul>
@@ -132,15 +140,15 @@
     </label>
 </div>
 
-<p><b class="fs-4" style="margin-left: 60;padding-top: 30">Cost</b></p>
+<p><b class="fs-4" style="margin-left: 60;padding-top: 30">Price</b></p>
 
 <div class="row">
     <div class="col">
-        <input type="text" class="form-control" placeholder="Cost min" aria-label="Cost min"
+        <input type="text" class="form-control" placeholder="Cost min" aria-label="Price min"
                style="width: 100px;height:40px;margin-left: 60;">
     </div>
     <div class="col">
-        <input type="text" class="form-control" placeholder="Cost max" aria-label="Cost max"
+        <input type="text" class="form-control" placeholder="Price max" aria-label="Cost max"
                style="width: 100px;height:40px;margin-right: 1250;">
     </div>
 </div>

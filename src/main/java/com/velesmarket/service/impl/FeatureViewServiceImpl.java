@@ -10,7 +10,6 @@ import com.velesmarket.service.feature.computer.auto.AutoFuelTypeF;
 import com.velesmarket.service.feature.computer.*;
 import com.velesmarket.service.feature.tv.*;
 import org.springframework.stereotype.Service;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

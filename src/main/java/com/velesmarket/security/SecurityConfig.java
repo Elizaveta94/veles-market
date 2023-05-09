@@ -32,7 +32,7 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/login", "/registration", "/").permitAll()
+                        .antMatchers("/login", "/registration", "/", "/home").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .usernameParameter("Login")
@@ -43,6 +43,9 @@ public class SecurityConfig {
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
+                        .deleteCookies("JSESSIONID")
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true)
                         .permitAll())
                 .build();
     }

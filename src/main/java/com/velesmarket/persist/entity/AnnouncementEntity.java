@@ -23,7 +23,7 @@ public class AnnouncementEntity {
     private Long id;
     private String title;
     private String description;
-    private int cost;
+    private Integer cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

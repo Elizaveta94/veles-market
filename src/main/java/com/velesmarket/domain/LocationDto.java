@@ -5,15 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class CategoryDto {
+@AllArgsConstructor
+public class LocationDto {
     private Long id;
-    private String title;
-    private String featureCategory;
-    private List<CategoryDto> subCategories;
+    private String city;
+    private String street;
 }
