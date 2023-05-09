@@ -1,4 +1,4 @@
-package com.velesmarket.service.feature.computer.auto;
+package com.velesmarket.service.feature.auto;
 
 
 import lombok.Getter;
