@@ -21,7 +21,7 @@
 
 h1 {
     font-family: 'Times New Roman', Times, serif;
-    font-size: 300%;
+    font-size: 200%;
    }
 
 </style>
@@ -48,9 +48,9 @@ h1 {
     </div>
 </nav>
 
-<br><b><h1><label class="form-label" style="margin:5px 100px 5px">Title</label></h1></b></b></br>
+<br><b><h1><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.title}"></label></h1></b></b></br>
 
-<br><b><label class="form-label" style="margin:5px 100px 5px">Category</label></b></br>
+<br><b><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.category}"></label></b></br>
 
 <br><b><label class="form-label" style="margin:5px 100px 5px">Photos</label></b></br>
 
@@ -58,15 +58,15 @@ h1 {
 <br><b><label class="form-label" style="margin:5px 100px 5px">Location</label></b></br>
 
 <ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px"></li>
-    <li class="list-group-item" style="width:200px;height:40px"></li>
+    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.location.city}"></li>
+    <li class="list-group-item" style="width:200px;height:40px" th:text="${announcement.title.street}"></li>
 </ul>
 
-<br><b><label class="form-label" style="margin:5px 100px 5px">Description</label></b></br>
+<br><b><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.title.description}"></label></b></br>
 
 <br><b><label class="form-label" style="margin:5px 100px 5px">Price</label></b></br>
 <ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px"></li>
+    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.cost}"></li>
 </ul>
 
 <button type="button" class="btn btn-success"
