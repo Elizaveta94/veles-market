@@ -23,8 +23,8 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
-                // Spring Security should completely ignore URLs starting with /resources/
-                .antMatchers("/resources/**");
+                // Spring Security should completely ignore URLs starting with /resources/ , /webjars/
+                .antMatchers("/resources/**", "/webjars/**");
     }
 
     @Bean
@@ -38,7 +38,6 @@ public class SecurityConfig {
                         .usernameParameter("Login")
                         .passwordParameter("password")
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
                         .failureHandler(new DebugErrorHandler())
                         .permitAll())
                 .logout(logout -> logout

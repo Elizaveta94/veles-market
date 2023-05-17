@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>General</title>
+</head>
+<body>
+
+    <div class="dropdown" th:fragment="categoriesDropdown(categories)">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="categoriesDropdownButton"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                style="margin-left:100;background: #008EB0; color: #ffffff;">
+            Categories
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="categoriesDropdownButton">
+            <li th:each="category : ${categories}">
+                <a class="dropdown-item"
+                   onclick="onCategoryClick(this)"
+                   th:if="${#lists.isEmpty(category.subCategories)}"
+                   th:text="${category.title}"
+                   th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+                />
+                <a class="dropdown-item"
+                   onclick="onCategoryClick(this)"
+                   th:unless="${#lists.isEmpty(category.subCategories)}"
+                   th:text="|${category.title} &raquo;|"
+                   th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+                />
+                <th:block th:unless="${#lists.isEmpty(category.subCategories)}" th:insert="~{fragments/general :: categoriesSubDropdown(categories = ${category.subCategories})}"></th:block>
+            </li>
+        </ul>
+    </div>
+    <ul class="dropdown-menu dropdown-submenu" aria-labelledby="categoriesDropdownButton" th:fragment="categoriesSubDropdown(categories)">
+        <li th:each="category : ${categories}">
+            <a class="dropdown-item"
+               onclick="onCategoryClick(this)"
+               th:if="${#lists.isEmpty(category.subCategories)}"
+               th:text="${category.title}"
+               th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+            />
+            <a class="dropdown-item"
+               onclick="onCategoryClick(this)"
+               th:unless="${#lists.isEmpty(category.subCategories)}"
+               th:text="|${category.title} &raquo;|"
+               th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+            />
+            <th:block th:unless="${#lists.isEmpty(category.subCategories)}" th:insert="~{fragments/general :: categoriesSubDropdown(categories = ${category.subCategories})}"></th:block>
+        </li>
+    </ul>
+
+</body>
+</html>

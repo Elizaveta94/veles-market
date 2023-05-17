@@ -28,6 +28,7 @@ public class AnnouncementController {
         model.addAttribute("categories", categories);
         model.addAttribute("announcement", AnnouncementDto.builder()
                 .location(new LocationDto()).category(new CategoryDto()).build());
+
         return "createAnAd";
     }
 

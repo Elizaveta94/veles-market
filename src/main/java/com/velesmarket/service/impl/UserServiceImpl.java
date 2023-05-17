@@ -53,4 +53,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 .build();
     }
 
+    @Override
+    public  UserDto update(UserDto userDto) {
+        userValidator.validate(userDto);
+        UserEntity userEntity = userMapper.mapToEntity(userDto);
+        getUser("login");
+        if (!userDto.getFirstName().equals(userEntity.getFirstName())) {
+            userEntity.setFirstName(userDto.getFirstName());
+        }
+        if (!userDto.getLastName().equals(userEntity.getLastName())) {
+            userEntity.setLastName(userDto.getLastName());
+        }
+        if (!userDto.getPassword().equals(userEntity.getPassword())) {
+            userEntity.setPassword(userDto.getPassword());
+        }
+        if (!userDto.getEmail().equals(userEntity.getEmail())) {
+            userEntity.setEmail(userDto.getEmail());
+        }
+        if (!userDto.getMobileNumber().equals(userEntity.getMobileNumber())) {
+            userEntity.setMobileNumber(userDto.getMobileNumber());
+        }
+
+        //return null;
+    }
 }

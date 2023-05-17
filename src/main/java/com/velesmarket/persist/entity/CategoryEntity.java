@@ -31,6 +31,10 @@ public class CategoryEntity {
     @JoinColumn(name = "parent_id")
     private List<CategoryEntity> subCategories;
 
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
+    private CategoryEntity parent;
+
     @Override
     public int hashCode() {
         return Objects.hashCode(id);

@@ -18,7 +18,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getAll() {
-        List<CategoryEntity> categoryEntities = categoryRepository.findAll();
+        List<CategoryEntity> categoryEntities = categoryRepository.findAllByParentIsNull();
         return categoryMapper.mapToDto(categoryEntities);
     }
 }
