@@ -8,5 +8,5 @@ public interface UserService {
 
     UserDto registrate(UserDto userDto);
 
-    UserDto update(UserDto userDto);
+    UserDto update(UserDto updatedUserDto, String userNameToUpdate);
 }

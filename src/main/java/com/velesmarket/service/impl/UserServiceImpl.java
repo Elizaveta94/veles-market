@@ -54,26 +54,31 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public  UserDto update(UserDto userDto) {
-        userValidator.validate(userDto);
-        UserEntity userEntity = userMapper.mapToEntity(userDto);
-        getUser("login");
-        if (!userDto.getFirstName().equals(userEntity.getFirstName())) {
-            userEntity.setFirstName(userDto.getFirstName());
-        }
-        if (!userDto.getLastName().equals(userEntity.getLastName())) {
-            userEntity.setLastName(userDto.getLastName());
-        }
-        if (!userDto.getPassword().equals(userEntity.getPassword())) {
-            userEntity.setPassword(userDto.getPassword());
-        }
-        if (!userDto.getEmail().equals(userEntity.getEmail())) {
-            userEntity.setEmail(userDto.getEmail());
-        }
-        if (!userDto.getMobileNumber().equals(userEntity.getMobileNumber())) {
-            userEntity.setMobileNumber(userDto.getMobileNumber());
-        }
+    @Transactional
+    public UserDto update(UserDto updatedUserDto, String userNameToUpdate) {
+        userValidator.validate(updatedUserDto);
+        Optional<UserEntity> opUserEntity = userRepository.findByLogin(userNameToUpdate);
+        UserEntity userEntity = opUserEntity.orElseThrow(() -> new UsernameNotFoundException(userNameToUpdate));
 
-        //return null;
+        if (!updatedUserDto.getFirstName().equals(userEntity.getFirstName())) {
+            userEntity.setFirstName(updatedUserDto.getFirstName());
+        }
+        if (!updatedUserDto.getLastName().equals(userEntity.getLastName())) {
+            userEntity.setLastName(updatedUserDto.getLastName());
+        }
+        if (!updatedUserDto.getPassword().equals(userEntity.getPassword())) {
+            userEntity.setPassword(updatedUserDto.getPassword());
+        }
+        if (!updatedUserDto.getEmail().equals(userEntity.getEmail())) {
+            userEntity.setEmail(updatedUserDto.getEmail());
+        }
+        if (!updatedUserDto.getMobileNumber().equals(userEntity.getMobileNumber())) {
+            userEntity.setMobileNumber(updatedUserDto.getMobileNumber());
+        }
+        if (!updatedUserDto.getLogin().equals(userEntity.getLogin())) {
+            userEntity.setLogin(updatedUserDto.getLogin());
+        }
+        UserEntity savedEntity = userRepository.save(userEntity);
+        return userMapper.mapToDto(userEntity);
     }
 }

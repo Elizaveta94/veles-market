@@ -53,8 +53,8 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String changesSave(@ModelAttribute UserDto user, Model model) {
-        UserDto newUser = userService.update(user);
+    public String changesSave(@ModelAttribute UserDto user, Model model, Principal principal) {
+        UserDto newUser = userService.update(user, principal.getName());
         model.addAttribute("user", newUser);
         return "redirect:userProfile";
     }
