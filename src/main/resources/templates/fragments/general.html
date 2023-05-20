@@ -16,13 +16,13 @@
                    onclick="onCategoryClick(this)"
                    th:if="${#lists.isEmpty(category.subCategories)}"
                    th:text="${category.title}"
-                   th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+                   th:attr="categoryId=${category.id},categoryTitle=${category.title},featureCategory=${category.featureCategory}"
                 />
                 <a class="dropdown-item"
                    onclick="onCategoryClick(this)"
                    th:unless="${#lists.isEmpty(category.subCategories)}"
                    th:text="|${category.title} &raquo;|"
-                   th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+                   th:attr="categoryId=${category.id},categoryTitle=${category.title},featureCategory=${category.featureCategory}"
                 />
                 <th:block th:unless="${#lists.isEmpty(category.subCategories)}" th:insert="~{fragments/general :: categoriesSubDropdown(categories = ${category.subCategories})}"></th:block>
             </li>
@@ -34,13 +34,13 @@
                onclick="onCategoryClick(this)"
                th:if="${#lists.isEmpty(category.subCategories)}"
                th:text="${category.title}"
-               th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+               th:attr="categoryId=${category.id},categoryTitle=${category.title},featureCategory=${category.featureCategory}"
             />
             <a class="dropdown-item"
                onclick="onCategoryClick(this)"
                th:unless="${#lists.isEmpty(category.subCategories)}"
                th:text="|${category.title} &raquo;|"
-               th:attr="categoryId=${category.id},categoryTitle=${category.title}"
+               th:attr="categoryId=${category.id},categoryTitle=${category.title},featureCategory=${category.featureCategory}"
             />
             <th:block th:unless="${#lists.isEmpty(category.subCategories)}" th:insert="~{fragments/general :: categoriesSubDropdown(categories = ${category.subCategories})}"></th:block>
         </li>

@@ -66,8 +66,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (!updatedUserDto.getLastName().equals(userEntity.getLastName())) {
             userEntity.setLastName(updatedUserDto.getLastName());
         }
-        if (!updatedUserDto.getPassword().equals(userEntity.getPassword())) {
-            userEntity.setPassword(updatedUserDto.getPassword());
+        if (!passwordEncoder.encode(updatedUserDto.getPassword()).equals(userEntity.getPassword())) {
+            userEntity.setPassword(passwordEncoder.encode(updatedUserDto.getPassword()));
         }
         if (!updatedUserDto.getEmail().equals(userEntity.getEmail())) {
             userEntity.setEmail(updatedUserDto.getEmail());

@@ -4,6 +4,7 @@ import com.velesmarket.domain.AnnouncementDto;
 import com.velesmarket.domain.CategoryDto;
 import com.velesmarket.domain.LocationDto;
 import com.velesmarket.domain.UserDto;
+import com.velesmarket.service.AnnouncementService;
 import com.velesmarket.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AnnouncementController {
     private final CategoryService categoryService;
+    private final AnnouncementService announcementService;
 
     @GetMapping("/create")
     public String getCreateForm(Model model) {
@@ -34,7 +36,7 @@ public class AnnouncementController {
 
     @PostMapping("/create")
     public String createAnnouncement(@ModelAttribute AnnouncementDto announcement, Model model, Principal principal) {
-        System.out.println("debug");
+        announcementService.create(announcement, principal.getName());
         return "createAnAd";
     }
 

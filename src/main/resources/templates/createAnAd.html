@@ -1,4 +1,4 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>My Spring Boot App</title>
@@ -6,10 +6,45 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
     <script src="/webjars/bootstrap/5.2.0/js/bootstrap.bundle.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!--Material Design Iconic Font-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <!-- Image Uploader CSS -->
+    <link rel="stylesheet" href="/img/image-uploader.min.css">
+
+    <!-- Image Uploader Js -->
+    <script type="text/javascript" src="/img/image-uploader.min.js"></script>
+
     <script>
         function onCategoryClick(obj) {
-          console.log(obj);
-        }
+            $('#formFeatureInputsContainer').children().remove();
+            $("#categoriesDropdownButton").text(obj.getAttribute('categoryTitle'));
+            $("#inputCategoryId").val(obj.getAttribute('categoryId'));
+            $.getJSON('http://localhost:8080/feature/' + obj.getAttribute('featureCategory'), function(data) {
+
+              var formInputs = '';
+
+              formInputs += '<div class="form-group">';
+              data.forEach(function(item) {
+                formInputs += '<b><label class="form-label">' + item.name + '*' + '</label></b>';
+                if (item.type === 'DROPDOWN') {
+                  formInputs += '<select name="featureMap[' + item.property + ']" class="form-control">';
+                  item.values.forEach(function(value) {
+                    formInputs += '<option value="' + value + '">' + value + '</option>';
+                  });
+                  formInputs += '</select>';
+                } else {
+                  formInputs += '<input type="text" name="featureMap[' + item.property + ']" class="form-control">';
+                }
+              });
+              formInputs += '</div>';
+
+              $('#formFeatureInputsContainer').html(formInputs);
+            });
+        };
 
     </script>
 </head>
@@ -24,8 +59,8 @@
     background-attachment: fixed;
    }
 
-p {
-    width: 1200px;	height: 150px;
+.input-images {
+    width: 1200;
     outline: 2px dashed #808080;
     background: #f0ffff;
    }
@@ -84,19 +119,15 @@ h2 {
 </nav>
 
 <h1 class="fs-4" style="margin:5px 100px 5px">Posting an announcement</h1>
-<h2 class="fs-4" style="margin:5px 100px 5px">Photos</h2>
 <br>
-<form class="row g-3" action="#" th:action="@{/announcement/create}" th:object="${announcement}" method="post">
-    <p style="margin:5px 80px 5px">
-        <input type="file" placeholder="Add photos" name="photo"
-               style="width:250px;height:45px;background: 	#1E90FF;margin-left: 20;margin-top:20"
-               class="btn btn-success"
-               multiple>
+<br>
+<form class="row g-3" action="#" th:action="@{/announcement/create}" th:object="${announcement}" method="post" enctype="multipart/form-data">
 
-        <br> <font style="margin-left:20" size="3" color="#C0C0C0" face="serif">Use real photos of your product from
-        different angles.Maximum
-        number of photos: 5.</font></br>
-    </p>
+    <div class="input-field" style="margin:5px 100px 5px">
+        <b><label class="active" style="margin:10px">Photos*</label></b>
+        <div class="input-images"></div>
+    </div>
+
     <div class="mb-3">
         <b><label for="formGroupExampleInput" class="form-label" style="margin:5px 100px 5px">Product/service
             name*</label></b>
@@ -104,10 +135,12 @@ h2 {
                id="formGroupExampleInput" th:field="*{title}" placeholder="For example, TV">
     </div>
 
-    <br><b><label style="margin:5px 100px 5px">Category
-    selection*</label></b></br>
+    <br><b><label style="margin:5px 100px 5px">Category selection*</label></b></br>
 
     <div th:replace="~{fragments/general :: categoriesDropdown(categories = ${categories})}"></div>
+    <input type="text" hidden="true" class="form-control" id="inputCategoryId" th:field="*{category.id}">
+
+    <div id="formFeatureInputsContainer" style="width: 300px;margin:5px 100px 5px"></div>
 
     <div class="mb-3">
         <b><label for="formGroupExampleInput" class="form-label" style="margin:5px 100px 5px">Description</label></b>
@@ -136,4 +169,13 @@ h2 {
     </div>
 </form>
 </body>
+<script>
+$(document).ready(function(){
+
+   $('.input-images').imageUploader({
+        imagesInputName: 'photosAnnouncement',
+   });
+
+});
+</script>
 </html>

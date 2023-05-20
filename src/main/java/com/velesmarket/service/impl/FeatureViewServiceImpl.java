@@ -10,6 +10,7 @@ import com.velesmarket.service.feature.auto.AutoFuelTypeF;
 import com.velesmarket.service.feature.computer.*;
 import com.velesmarket.service.feature.tv.*;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ public class FeatureViewServiceImpl implements FeatureViewService {
                         .name("Fuel type")
                         .type(FeatureType.DROPDOWN)
                         .values(AutoFuelTypeF.getAllFuelTypes())
+                        .property("fuelType")
                         .build(),
                 Feature.builder()
                         .name("Engine capacity")

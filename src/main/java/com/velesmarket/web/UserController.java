@@ -8,10 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 
-import java.net.http.HttpClient;
 import java.security.Principal;
 
 @Controller
@@ -53,10 +50,9 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String changesSave(@ModelAttribute UserDto user, Model model, Principal principal) {
-        UserDto newUser = userService.update(user, principal.getName());
-        model.addAttribute("user", newUser);
-        return "redirect:userProfile";
+    public String changesSave(@ModelAttribute UserDto user, Principal principal) {
+        userService.update(user, principal.getName());
+        return "redirect:profile";
     }
 
 }

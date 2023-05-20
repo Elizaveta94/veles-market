@@ -10,5 +10,6 @@ import java.util.List;
 public class Feature {
     private FeatureType type;
     private String name;
+    private String property;
     private List<String> values;
 }
