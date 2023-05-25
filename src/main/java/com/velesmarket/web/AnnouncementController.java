@@ -1,9 +1,6 @@
 package com.velesmarket.web;
 
-import com.velesmarket.domain.AnnouncementDto;
-import com.velesmarket.domain.CategoryDto;
-import com.velesmarket.domain.LocationDto;
-import com.velesmarket.domain.UserDto;
+import com.velesmarket.domain.*;
 import com.velesmarket.service.AnnouncementService;
 import com.velesmarket.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -35,9 +32,10 @@ public class AnnouncementController {
     }
 
     @PostMapping("/create")
-    public String createAnnouncement(@ModelAttribute AnnouncementDto announcement, Model model, Principal principal) {
-        announcementService.create(announcement, principal.getName());
-        return "createAnAd";
+    public String createAnnouncement(@ModelAttribute AnnouncementCreateRequest announcement, Model model, Principal principal) {
+        AnnouncementDto createdAnnouncement = announcementService.create(announcement, principal.getName());
+        model.addAttribute("announcement", createdAnnouncement);
+        return "announcement";
     }
 
 }

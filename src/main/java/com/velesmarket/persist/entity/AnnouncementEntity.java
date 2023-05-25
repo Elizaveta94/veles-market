@@ -30,7 +30,8 @@ public class AnnouncementEntity {
     @ToString.Exclude
     private UserEntity user;
 
-    @OneToMany(mappedBy = "announcement")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "announcement_id")
     @Fetch(FetchMode.SUBSELECT)
     private List<PhotoAnnouncementEntity> photosAnnouncement;
 
