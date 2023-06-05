@@ -44,7 +44,7 @@ CREATE SEQUENCE photo_announcement_id_seq;
 
 CREATE TABLE photo_announcement (
     id BIGINT NOT NULL PRIMARY KEY,
-    announcement_id BIGINT  REFERENCES announcement (id) NOT NULL,
+    announcement_id BIGINT  REFERENCES announcement (id),
     src BYTEA
 );
 

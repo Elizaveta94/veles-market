@@ -3,26 +3,50 @@
     <meta charset="UTF-8">
     <title>My Spring Boot App</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.0/css/bootstrap.min.css"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="/webjars/bootstrap/5.2.0/js/bootstrap.js"></script>
+
+    <script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
+
 </head>
 <body>
 <style>
-   body {
-    background: url(https://abrakadabra.fun/uploads/posts/2021-11/1636778628_37-abrakadabra-fun-p-fon-dlya-tovarov-internet-magazina-40.jpg) no-repeat;
-    -moz-background-size: 100%;
-    -webkit-background-size: 100%;
-    -o-background-size: 100%;
-    background-size: 100%;
-    background-attachment: fixed;
-   }
+    body {
+        background: url(https://abrakadabra.fun/uploads/posts/2021-11/1636778628_37-abrakadabra-fun-p-fon-dlya-tovarov-internet-magazina-40.jpg) no-repeat;
+        -moz-background-size: 100%;
+        -webkit-background-size: 100%;
+        -o-background-size: 100%;
+        background-size: 100%;
+        background-attachment: fixed;
+    }
 
-h1 {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 200%;
-   }
+    h1 {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 200%;
+    }
+
+    .carousel-container {
+        width: 100%;
+        height: 400px;
+        overflow: hidden;
+    }
+
+    .carousel-inner img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+    }
+
+    .custom-row {
+        padding: 10px;
+        background-color: white;
+    }
+
+    .col {
+        padding: 5px;
+        border-top: 1px solid black;
+    }
 
 </style>
 
@@ -48,33 +72,98 @@ h1 {
     </div>
 </nav>
 
-<br><b><h1><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.title}"></label></h1></b></b></br>
+<br>
+<b><h1><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.title}"></label></h1></b>
 
-<br><b><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.category}"></label></b></br>
+<b><label class="form-label" style="margin:5px 100px 5px">Category</label></b>
+<br>
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.category.title}"></li>
+</ul>
 
-<br><b><label class="form-label" style="margin:5px 100px 5px">Photos</label></b></br>
+<!--<br><b><label class="form-label" style="margin:5px 100px 5px">Photos</label></b></br>-->
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
 
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" th:each="photo, iterStat : ${announcement.photosAnnouncement}"
+                th:aria-label="'Slide ' + ${iterStat.count}"
+                th:aria-current="${iterStat.index == 0}"
+                th:data-bs-slide-to="${iterStat.index}"
+                th:classappend="(${iterStat.index == 0}) ? 'active' : ''" ></button>
+    </div>
 
-<br><b><label class="form-label" style="margin:5px 100px 5px">Location</label></b></br>
+    <div class="carousel-inner" >
+        <div class="carousel-item" th:each="photo, iterStat : ${announcement.photosAnnouncement}"
+             th:classappend="(${iterStat.index == 0}) ? 'active' : ''">
+            <img th:src="'http://localhost:8080/photo/announcement/' + ${photo.id}" class="d-block w-100" alt="...">
+        </div>
+    </div>
 
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<br>
+<b><label class="form-label" style="margin:5px 100px 5px">Price</label></b>
+<br>
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.cost}"></li>
+</ul>
+
+<br>
+<b><label class="form-label" style="margin:5px 100px 5px">Description</label></b>
+<br>
+<ul class="list-group list-group-horizontal">
+    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.description}"></li>
+</ul>
+
+<th:block th:if="${featureMap != null and not #maps.isEmpty(featureMap)}">
+    <br>
+    <b><label class="form-label" style="margin:5px 100px 5px">Features</label></b>
+    <br>
+    <div style="margin:5px 100px 5px; width: 30%">
+        <div class="row row-cols-2 custom-row">
+            <th:block th:each="feature : ${featureMap}">
+                <div class="col" th:text="${feature.key}"></div>
+                <div class="col" th:text="${feature.value}"></div>
+            </th:block>
+        </div>
+    </div>
+</th:block>
+
+<br>
+<b><label class="form-label" style="margin:5px 100px 5px">Location</label></b>
+<br>
 <ul class="list-group list-group-horizontal">
     <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.location.city}"></li>
     <li class="list-group-item" style="width:200px;height:40px" th:text="${announcement.location.street}"></li>
 </ul>
 
-<br><b><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.description}"></label></b></br>
-
-<br><b><label class="form-label" style="margin:5px 100px 5px">Price</label></b></br>
+<br>
+<b><label class="form-label" style="margin:5px 100px 5px">Seller information</label></b>
+<br>
 <ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.cost}"></li>
+    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.user.firstName}"></li>
+    <li class="list-group-item" style="width:200px;height:40px" th:text="${announcement.user.mobileNumber}"></li>
 </ul>
 
-<button type="button" class="btn btn-success"
-        style="width:250px;height:45px;background: #008EB0;margin-left: 100;margin-top:20">Seller information
-</button>
+<th:block th:if="${isCreator}">
+    <form method="post" th:action="@{/announcement/{id}(id=${announcement.id})}">
+        <button type="submit" class="btn btn-success"
+                style="width:250px;height:45px;background: #FF0000;margin-left: 150;margin-top:20">
+            Delete
+        </button>
+    </form>
+</th:block>
 
-<script src="/webjars/jquery/3.6.0/jquery.min.js"></script>
-<script src="/webjars/bootstrap/5.2.0/js/bootstrap.min.js"></script>
+<footer th:replace="~{fragments/general :: footer}"></footer>
+
 </body>
 
 </html>

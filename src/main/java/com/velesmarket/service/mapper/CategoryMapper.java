@@ -11,7 +11,6 @@ import java.util.List;
 public interface CategoryMapper {
     CategoryDto mapToDto(CategoryEntity source);
 
-    @Mapping(target = "announcements", ignore = true)
     CategoryEntity mapToEntity(CategoryDto source);
 
     List<CategoryDto> mapToDto(List<CategoryEntity> source);

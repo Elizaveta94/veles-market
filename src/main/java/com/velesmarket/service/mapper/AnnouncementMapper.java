@@ -29,7 +29,7 @@ public interface AnnouncementMapper {
     @Mapping(target = "title", source = "source.title")
     @Mapping(target = "description", source = "source.description")
     @Mapping(target = "cost", source = "source.cost")
-//    @Mapping(target = "photosAnnouncement", source = "source.photosAnnouncement")
+    @Mapping(target = "photosAnnouncement", source = "source.photosAnnouncement")
     @Mapping(target = "location", source = "source.location")
     @Mapping(target = "category", source = "source.category")
     AnnouncementDto mapToDto(AnnouncementEntity source, Map<String, String> featureMap);

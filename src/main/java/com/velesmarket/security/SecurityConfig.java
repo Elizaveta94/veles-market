@@ -32,7 +32,7 @@ public class SecurityConfig {
         return http
                 .csrf().disable()
                 .authorizeRequests(authorize -> authorize
-                        .antMatchers("/login", "/registration", "/", "/home", "/feature/**").permitAll()
+                        .antMatchers("/login", "/registration", "/", "/home", "/feature/**", "/photo/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(formLogin -> formLogin
                         .usernameParameter("Login")

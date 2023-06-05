@@ -23,10 +23,6 @@ public class CategoryEntity {
     private String title;
     private String featureCategory;
 
-    @OneToMany(mappedBy = "category")
-    @Fetch(FetchMode.SUBSELECT)
-    private List<AnnouncementEntity> announcements;
-
     @OneToMany
     @JoinColumn(name = "parent_id")
     private List<CategoryEntity> subCategories;

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -19,6 +20,6 @@ public class AnnouncementDto {
     private Integer cost;
     private LocationDto location;
     private CategoryDto category;
-//    private List<MultipartFile> photosAnnouncement;
+    private List<PhotoAnnouncementDto> photosAnnouncement;
     private Map<String, String> featureMap;
 }

@@ -165,7 +165,6 @@ public class FeatureViewServiceImpl implements FeatureViewService {
                 Feature.builder()
                         .name("Year")
                         .type(FeatureType.RANGE_INPUT)
-
                         .property("year")
                         .build(),
                 Feature.builder()

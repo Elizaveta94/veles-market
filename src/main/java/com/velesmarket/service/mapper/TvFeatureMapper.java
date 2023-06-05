@@ -1,6 +1,5 @@
 package com.velesmarket.service.mapper;
 
-import com.velesmarket.persist.entity.AutoFeatureEntity;
 import com.velesmarket.persist.entity.TvFeatureEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

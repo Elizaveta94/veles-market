@@ -35,7 +35,7 @@ public class AnnouncementEntity {
     @Fetch(FetchMode.SUBSELECT)
     private List<PhotoAnnouncementEntity> photosAnnouncement;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "location_id")
     private LocationEntity location;
 

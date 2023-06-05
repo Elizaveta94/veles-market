@@ -1,11 +1,11 @@
 package com.velesmarket.service.impl;
 
+import com.velesmarket.domain.AnnouncementCardDto;
 import com.velesmarket.domain.AnnouncementCreateRequest;
 import com.velesmarket.domain.AnnouncementDto;
 import com.velesmarket.persist.entity.*;
 import com.velesmarket.persist.repository.*;
 import com.velesmarket.service.AnnouncementService;
-import com.velesmarket.service.CategoryService;
 import com.velesmarket.service.mapper.AnnouncementMapper;
 import com.velesmarket.service.mapper.AutoFeatureMapper;
 import com.velesmarket.service.mapper.ComputerFeatureMapper;
@@ -15,27 +15,21 @@ import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
 public class AnnouncementServiceImpl implements AnnouncementService {
-    private final CategoryService categoryService;
 
     private final AnnouncementMapper announcementMapper;
     private final AutoFeatureMapper autoFeatureMapper;
-
     private final TvFeatureMapper tvFeatureMapper;
-
     private final ComputerFeatureMapper computerFeatureMapper;
+
     private final AnnouncementRepository announcementRepository;
+    private final PhotoAnnouncementRepository photoAnnouncementRepository;
     private final AutoFeatureRepository autoFeatureRepository;
-
     private final ComputerFeatureRepository computerFeatureRepository;
-
     private final TvFeatureRepository tvFeatureRepository;
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
@@ -55,20 +49,22 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         announcementEntity = announcementRepository.save(announcementEntity);
 
         switch (getFeatureCategory(announcementEntity)) {
-            case "auto": {
+            case "auto" -> {
                 AutoFeatureEntity autoFeatureEntity = autoFeatureMapper.mapToEntity(announcementCreateReq.getFeatureMap());
                 autoFeatureEntity.setAnnouncement(announcementEntity);
                 autoFeatureRepository.save(autoFeatureEntity);
             }
-            case "tv": {
+            case "tv" -> {
                 TvFeatureEntity tvFeatureEntity = tvFeatureMapper.mapToEntity(announcementCreateReq.getFeatureMap());
                 tvFeatureEntity.setAnnouncement(announcementEntity);
                 tvFeatureRepository.save(tvFeatureEntity);
             }
-            case "computer": {
+            case "computer" -> {
                 ComputerFeatureEntity computerFeatureEntity = computerFeatureMapper.mapToEntity(announcementCreateReq.getFeatureMap());
                 computerFeatureEntity.setAnnouncement(announcementEntity);
                 computerFeatureRepository.save(computerFeatureEntity);
+            }
+            default -> {
             }
         }
         return get(announcementEntity.getId());
@@ -81,24 +77,48 @@ public class AnnouncementServiceImpl implements AnnouncementService {
                 .orElseThrow(() -> new RuntimeException("Announcement not found by id: " + id));
         Map<String, String> featureMap = new HashMap<>();
         switch (getFeatureCategory(announcementEntity)) {
-            case "auto": {
-                autoFeatureRepository.findByAnnouncementId(id).ifPresent(
-                        autoFeatureEntity -> featureMap.putAll(autoFeatureMapper.mapToMap(autoFeatureEntity))
-                );
-            }
-            case "tv": {
-                tvFeatureRepository.findByAnnouncementId(id).ifPresent(
-                        tvFeatureEntity -> featureMap.putAll(tvFeatureMapper.mapToMap(tvFeatureEntity))
-                );
-            }
-            case "computer": {
-                computerFeatureRepository.findByAnnouncementId(id).ifPresent(
-                        computerFeatureEntity -> featureMap.putAll(computerFeatureMapper.mapToMap(computerFeatureEntity))
-                );
-
+            case "auto" -> autoFeatureRepository.findByAnnouncementId(id).ifPresent(
+                    autoFeatureEntity -> featureMap.putAll(autoFeatureMapper.mapToMap(autoFeatureEntity))
+            );
+            case "tv" -> tvFeatureRepository.findByAnnouncementId(id).ifPresent(
+                    tvFeatureEntity -> featureMap.putAll(tvFeatureMapper.mapToMap(tvFeatureEntity))
+            );
+            case "computer" -> computerFeatureRepository.findByAnnouncementId(id).ifPresent(
+                    computerFeatureEntity -> featureMap.putAll(computerFeatureMapper.mapToMap(computerFeatureEntity))
+            );
+            default -> {
             }
         }
         return announcementMapper.mapToDto(announcementEntity, featureMap);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        AnnouncementEntity announcementEntity = announcementRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Announcement not found by id: " + id));
+        switch (getFeatureCategory(announcementEntity)) {
+            case "auto" -> autoFeatureRepository.findByAnnouncementId(id).ifPresent(autoFeatureRepository::delete);
+            case "tv" -> tvFeatureRepository.findByAnnouncementId(id).ifPresent(tvFeatureRepository::delete);
+            case "computer" ->
+                    computerFeatureRepository.findByAnnouncementId(id).ifPresent(computerFeatureRepository::delete);
+            default -> {
+            }
+        }
+        announcementRepository.delete(announcementEntity);
+    }
+
+    @Override
+    public List<AnnouncementCardDto> getAllCards() {
+        List<AnnouncementEntity> announcementEntities = announcementRepository.findAll();
+        return announcementEntities.stream()
+                .map(e -> AnnouncementCardDto.builder()
+                        .id(e.getId())
+                        .title(e.getTitle())
+                        .cost(e.getCost())
+                        .photoId(e.getPhotosAnnouncement().get(0).getId())
+                        .build())
+                .toList();
     }
 
     private void setAnnouncementToPhotos(AnnouncementEntity announcementEntity,
