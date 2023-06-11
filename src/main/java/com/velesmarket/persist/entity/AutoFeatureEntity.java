@@ -18,10 +18,10 @@ public class AutoFeatureEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auto_feature_id_seq")
     private Long id;
     private String fuelType;
-    private int engineCapacity;
-    private int mileage;
+    private Integer engineCapacity;
+    private Integer mileage;
     private String autoCategory;
-    private int year;
+    private Integer year;
     private String brand;
     private String model;
 

@@ -6,8 +6,8 @@ import lombok.Data;
 @Data
 @Builder
 public class AnnouncementCardDto {
-    private long id;
+    private Long id;
     private String title;
-    private int cost;
-    private long photoId;
+    private Integer cost;
+    private Long photoId;
 }

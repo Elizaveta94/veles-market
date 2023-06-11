@@ -10,7 +10,9 @@ import java.io.IOException;
 
 @Mapper(componentModel = "spring")
 public interface PhotoAnnouncementMapper {
-    @Mapping(target = "src", source = "file.bytes")
+    @Mapping(target = "src", expression="java(file.getBytes().length == 0 ? null : file.getBytes())")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "announcement", ignore = true)
     PhotoAnnouncementEntity mapToEntity(MultipartFile file) throws IOException;
 
     PhotoAnnouncementDto mapToDto(PhotoAnnouncementEntity source);

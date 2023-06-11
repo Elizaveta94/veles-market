@@ -3,8 +3,8 @@ package com.velesmarket.service;
 import com.velesmarket.domain.AnnouncementCardDto;
 import com.velesmarket.domain.AnnouncementCreateRequest;
 import com.velesmarket.domain.AnnouncementDto;
-
-import java.util.List;
+import com.velesmarket.domain.SearchDataDto;
+import org.springframework.data.domain.Page;
 
 public interface AnnouncementService {
     AnnouncementDto create(AnnouncementCreateRequest announcement, String userLogin);
@@ -13,5 +13,8 @@ public interface AnnouncementService {
 
     void delete(Long id);
 
-    List<AnnouncementCardDto> getAllCards();
+    Page<AnnouncementCardDto> getFirstPage();
+
+    Page<AnnouncementCardDto> findAnnouncements(SearchDataDto searchDataDto);
+
 }

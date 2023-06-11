@@ -26,7 +26,7 @@ public class ComputerFeatureEntity {
     private String graphicsCard;
     private String hardDisk;
     private String hardDiskType;
-    private int year;
+    private Integer year;
     private String brand;
     private String model;
 

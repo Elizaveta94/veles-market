@@ -22,7 +22,7 @@ public class TvFeatureEntity {
     private String smartTv;
     private String refreshRate;
     private String diagonal;
-    private int year;
+    private Integer year;
     private String brand;
     private String model;
 

@@ -39,14 +39,16 @@
     }
 
     .custom-row {
-        padding: 10px;
-        background-color: white;
+        padding: 0px 15px 0px;
     }
 
-    .col {
-        padding: 5px;
+    .feature-col {
+        padding: 10px;
+        text-align: center;
         border-top: 1px solid black;
     }
+
+
 
 </style>
 
@@ -54,7 +56,7 @@
     <div class="container-fluid">
         <nav class="navbar bg-body-tertiary">
             <div class="container-fluid" style="font-family: cursive;">
-                <a class="navbar-brand" href="#" style="font-size: 250%">
+                <a class="navbar-brand" href="/" style="font-size: 250%">
                     <img src="https://media.istockphoto.com/id/1184211010/ru/%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%BD%D0%B0%D1%8F/vs-%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2-%D0%B1%D1%83%D0%BA%D0%B2-%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80-%D0%BB%D0%BE%D0%B3%D0%BE%D1%82%D0%B8%D0%BF-%D0%B8%D0%B7%D0%BE%D0%BB%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D1%8B-%D0%BD%D0%B0-%D0%BF%D1%80%D0%BE%D0%B7%D1%80%D0%B0%D1%87%D0%BD%D0%BE%D0%BC-%D1%84%D0%BE%D0%BD%D0%B5-vs-%D0%BF%D1%80%D0%BE%D1%82%D0%B8%D0%B2-%D1%81%D0%B8%D0%BC%D0%B2%D0%BE%D0%BB%D0%B0.jpg?s=612x612&w=0&k=20&c=hQXwBq60sQutxLGbxYut89ru5FtJ_fVt1dJqkGkjqA0="
                          width="70" height="70" class="d-inline-block align-top">
                     Veles Market
@@ -72,96 +74,118 @@
     </div>
 </nav>
 
-<br>
-<b><h1><label class="form-label" style="margin:5px 100px 5px" th:text="${announcement.title}"></label></h1></b>
+<div class="container">
+    <br>
+    <b><h1><label class="form-label" style="margin:5px 0px 5px" th:text="${announcement.title}"></label></h1></b>
 
-<b><label class="form-label" style="margin:5px 100px 5px">Category</label></b>
-<br>
-<ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.category.title}"></li>
-</ul>
+    <b><label class="form-label" style="margin:5px 0px 5px">Category</label></b>
+    <br>
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item" style="margin-left:0px;width:200px;height:40px"
+            th:text="${announcement.category.title}"></li>
+    </ul>
+    <th:block th:unless="${#lists.isEmpty(announcement.photosAnnouncement)}">
+        <br><b><label class="form-label" style="margin:5px 0px 5px">Photos</label></b></br>
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel" style="height:40%">
 
-<!--<br><b><label class="form-label" style="margin:5px 100px 5px">Photos</label></b></br>-->
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleIndicators"
+                        th:each="photo, iterStat : ${announcement.photosAnnouncement}"
+                        th:aria-label="'Slide ' + ${iterStat.count}"
+                        th:aria-current="${iterStat.index == 0}"
+                        th:data-bs-slide-to="${iterStat.index}"
+                        th:classappend="(${iterStat.index == 0}) ? 'active' : ''"></button>
+            </div>
 
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" th:each="photo, iterStat : ${announcement.photosAnnouncement}"
-                th:aria-label="'Slide ' + ${iterStat.count}"
-                th:aria-current="${iterStat.index == 0}"
-                th:data-bs-slide-to="${iterStat.index}"
-                th:classappend="(${iterStat.index == 0}) ? 'active' : ''" ></button>
-    </div>
+            <div class="carousel-inner">
+                <div class="carousel-item" th:each="photo, iterStat : ${announcement.photosAnnouncement}"
+                     th:classappend="(${iterStat.index == 0}) ? 'active' : ''">
+                    <img th:src="'http://localhost:8080/photo/announcement/' + ${photo.id}" class="d-block w-100" alt="...">
+                </div>
+            </div>
 
-    <div class="carousel-inner" >
-        <div class="carousel-item" th:each="photo, iterStat : ${announcement.photosAnnouncement}"
-             th:classappend="(${iterStat.index == 0}) ? 'active' : ''">
-            <img th:src="'http://localhost:8080/photo/announcement/' + ${photo.id}" class="d-block w-100" alt="...">
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-    </div>
+    </th:block>
+    <th:block th:unless="${#strings.isEmpty(announcement.cost)}">
+        <br>
+        <b><label class="form-label" style="margin:5px 0px 5px">Price</label></b>
+        <br>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" style="margin-left:0px;width:200px;height:40px"
+                th:text="${announcement.cost}"></li>
+        </ul>
+    </th:block>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-    </button>
-</div>
+    <th:block th:unless="${#strings.isEmpty(announcement.description)}">
+        <br>
+        <b><label class="form-label" style="margin:5px 0px 5px">Description</label></b>
+        <br>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" style="margin-left:0px;height:40px">
+                <p th:text="${announcement.description}" class="text-break"></p>
+            </li>
+        </ul>
+    </th:block>
 
-<br>
-<b><label class="form-label" style="margin:5px 100px 5px">Price</label></b>
-<br>
-<ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.cost}"></li>
-</ul>
-
-<br>
-<b><label class="form-label" style="margin:5px 100px 5px">Description</label></b>
-<br>
-<ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.description}"></li>
-</ul>
-
-<th:block th:if="${featureMap != null and not #maps.isEmpty(featureMap)}">
-    <br>
-    <b><label class="form-label" style="margin:5px 100px 5px">Features</label></b>
-    <br>
-    <div style="margin:5px 100px 5px; width: 30%">
-        <div class="row row-cols-2 custom-row">
-            <th:block th:each="feature : ${featureMap}">
-                <div class="col" th:text="${feature.key}"></div>
-                <div class="col" th:text="${feature.value}"></div>
+    <th:block th:unless="${featureMap == null and #maps.isEmpty(featureMap)}">
+        <br>
+        <b><label class="form-label" style="margin:5px 0px 5px">Features</label></b>
+        <br>
+        <div class="border" style="margin:5px 0px 5px; width: 30%; border-radius: 5px; background-color: white">
+            <th:block th:each="feature, iterStat : ${featureMap}">
+                <div class="row row-cols-3 custom-row">
+                    <div class="feature-col" th:text="${feature.key}"
+                         th:styleappend="(${iterStat.index == 0}) ? 'border-style: hidden;' : ''"></div>
+                    <div class="feature-col" th:styleappend="(${iterStat.index == 0}) ? 'border-style: hidden;' : ''">
+                        ➾
+                    </div>
+                    <div class="feature-col" th:text="${feature.value}"
+                         th:styleappend="(${iterStat.index == 0}) ? 'border-style: hidden;' : ''"></div>
+                </div>
             </th:block>
         </div>
-    </div>
-</th:block>
+    </th:block>
 
-<br>
-<b><label class="form-label" style="margin:5px 100px 5px">Location</label></b>
-<br>
-<ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.location.city}"></li>
-    <li class="list-group-item" style="width:200px;height:40px" th:text="${announcement.location.street}"></li>
-</ul>
+    <th:block
+            th:unless="${#strings.isEmpty(announcement.location.city) or #strings.isEmpty(announcement.location.street)}">
+        <br>
+        <b><label class="form-label" style="margin:5px 0px 5px">Location</label></b>
+        <br>
+        <ul class="list-group list-group-horizontal">
+            <li class="list-group-item" style="margin-left:0px;width:200px;height:40px"
+                th:text="${announcement.location.city}"></li>
+            <li class="list-group-item" style="width:200px;height:40px" th:text="${announcement.location.street}"></li>
+        </ul>
+    </th:block>
 
-<br>
-<b><label class="form-label" style="margin:5px 100px 5px">Seller information</label></b>
-<br>
-<ul class="list-group list-group-horizontal">
-    <li class="list-group-item" style="margin-left:100;width:200px;height:40px" th:text="${announcement.user.firstName}"></li>
-    <li class="list-group-item" style="width:200px;height:40px" th:text="${announcement.user.mobileNumber}"></li>
-</ul>
+    <br>
+    <b><label class="form-label" style="margin:5px 0px 5px">Seller information</label></b>
+    <br>
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item" style="margin-left:0px;width:200px;height:40px"
+            th:text="${announcement.user.firstName}"></li>
+        <li class="list-group-item" style="width:200px;height:40px" th:text="${announcement.user.mobileNumber}"></li>
+    </ul>
 
-<th:block th:if="${isCreator}">
-    <form method="post" th:action="@{/announcement/{id}(id=${announcement.id})}">
-        <button type="submit" class="btn btn-success"
-                style="width:250px;height:45px;background: #FF0000;margin-left: 150;margin-top:20">
-            Delete
-        </button>
-    </form>
-</th:block>
-
+    <th:block th:if="${isCreator}">
+        <form method="post" th:action="@{/announcement/{id}(id=${announcement.id})}">
+            <button type="submit" class="btn btn-success"
+                    style="width:250px;height:45px;background: #FF0000;margin-left: 150;margin-top:20">
+                Delete
+            </button>
+        </form>
+    </th:block>
+</div>
 <footer th:replace="~{fragments/general :: footer}"></footer>
 
 </body>

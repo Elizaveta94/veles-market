@@ -3,6 +3,10 @@ package com.velesmarket.web;
 import com.velesmarket.domain.UserDto;
 import com.velesmarket.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,7 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
     @GetMapping("/registration")
     public String getRegistrationForm(Model model) {
@@ -26,8 +31,10 @@ public class UserController {
     @PostMapping("/registration")
     public String registrationSubmit(@ModelAttribute UserDto user, Model model) {
         UserDto newUser = userService.registrate(user);
-        model.addAttribute("user", newUser);
-        return "userProfile";
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getLogin(),user.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        return "redirect:/profile";
     }
 
     @GetMapping("/login")

@@ -1,7 +1,6 @@
 package com.velesmarket.web;
 
 import com.velesmarket.domain.*;
-import com.velesmarket.persist.repository.PhotoAnnouncementRepository;
 import com.velesmarket.service.AnnouncementService;
 import com.velesmarket.service.CategoryService;
 import com.velesmarket.service.FeatureViewService;
@@ -11,6 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.util.List;
@@ -31,17 +31,19 @@ public class AnnouncementController {
         Map<String, String> featureMap = null;
         List<Feature> features = featureViewService.getFeaturesView(announcementDto.getCategory().getFeatureCategory());
         if (features != null && !features.isEmpty()) {
-            featureMap = announcementDto.getFeatureMap().entrySet().stream().collect(Collectors.toMap(
-                    featureEntry -> features.stream()
-                            .filter(f -> f.getProperty().equals(featureEntry.getKey()))
-                            .findFirst()
-                            .get()
-                            .getName()
-                    , Map.Entry::getValue
-            ));
+            featureMap = announcementDto.getFeatureMap().entrySet().stream()
+                    .filter(feature -> feature.getValue() != null && !feature.getValue().equals("null"))
+                    .collect(Collectors.toMap(
+                            featureEntry -> features.stream()
+                                    .filter(f -> f.getProperty().equals(featureEntry.getKey()))
+                                    .findFirst()
+                                    .get()
+                                    .getName()
+                            , Map.Entry::getValue
+                    ));
         }
         model.addAttribute("announcement", announcementDto);
-        model.addAttribute("isCreator", principal.getName().equals(announcementDto.getUser().getLogin()));
+        model.addAttribute("isCreator", principal != null && principal.getName().equals(announcementDto.getUser().getLogin()));
         model.addAttribute("featureMap", featureMap);
         return "announcement";
     }
@@ -68,6 +70,8 @@ public class AnnouncementController {
 
     @PostMapping("/create")
     public String createAnnouncement(@ModelAttribute AnnouncementCreateRequest announcement, Principal principal) {
+        List<MultipartFile> filteredPhotos = announcement.getPhotosAnnouncement().stream().filter(f -> !f.isEmpty()).toList();
+        announcement.setPhotosAnnouncement(filteredPhotos);
         AnnouncementDto createdAnnouncement = announcementService.create(announcement, principal.getName());
         return "redirect:/announcement/" + createdAnnouncement.getId();
     }
