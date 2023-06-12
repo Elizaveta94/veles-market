@@ -12,7 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.Map;
 @Controller
 @RequiredArgsConstructor
-public class VelesController implements ErrorController {
+public class VelesErrorController implements ErrorController {
 
     private final ErrorAttributes errorAttributes;
 

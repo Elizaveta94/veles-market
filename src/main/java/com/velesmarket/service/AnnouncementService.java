@@ -6,6 +6,8 @@ import com.velesmarket.domain.AnnouncementDto;
 import com.velesmarket.domain.SearchDataDto;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
+
 public interface AnnouncementService {
     AnnouncementDto create(AnnouncementCreateRequest announcement, String userLogin);
 
@@ -16,5 +18,7 @@ public interface AnnouncementService {
     Page<AnnouncementCardDto> getFirstPage();
 
     Page<AnnouncementCardDto> findAnnouncements(SearchDataDto searchDataDto);
+
+    List<AnnouncementCardDto> findByUser(String userLogin);
 
 }

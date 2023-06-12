@@ -16,6 +16,7 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Repository
 public class AnnouncementCustomSearchRepository {
@@ -51,10 +52,10 @@ public class AnnouncementCustomSearchRepository {
     private Predicate buildCombinedPredicate(CriteriaBuilder criteriaBuilder, CriteriaQuery query, Root<AnnouncementEntity> root, SearchDataDto searchDataDto) {
         List<Predicate> predicates = new ArrayList<>();
         if (!searchDataDto.getTitle().isEmpty()) {
-            predicates.add(criteriaBuilder.like(root.get("title"), "%" + searchDataDto.getTitle() + "%"));
+            predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("title")), "%" + searchDataDto.getTitle().toLowerCase() + "%"));
         }
-        if (!searchDataDto.getPrice().get("from").isEmpty()) {
-            predicates.add(getPricePredicate(criteriaBuilder, root, searchDataDto.getPrice()));
+        if (!searchDataDto.getPrice().get("from").isEmpty() || !searchDataDto.getPrice().get("to").isEmpty()) {
+            predicates.add(rangeNumberPredicate(criteriaBuilder, root, "cost", searchDataDto.getPrice()));
         }
         if (searchDataDto.getCategoryId() > 0) {
             predicates.add(criteriaBuilder.equal(root.get("category"), searchDataDto.getCategoryId()));
@@ -85,14 +86,6 @@ public class AnnouncementCustomSearchRepository {
         return predicates;
     }
 
-    private Predicate getPricePredicate(CriteriaBuilder criteriaBuilder,
-                                        Root<AnnouncementEntity> root,
-                                        Map<String, String> price) {
-        int from = Integer.parseInt(price.get("from"));
-        int to = Integer.parseInt(price.get("to"));
-        return criteriaBuilder.between(root.get("cost"), from, to);
-    }
-
     private Predicate getFeatureFilter(CriteriaBuilder criteriaBuilder,
                                        CriteriaQuery query,
                                        Root<AnnouncementEntity> root,
@@ -115,37 +108,14 @@ public class AnnouncementCustomSearchRepository {
         Subquery<Long> subQuery = query.subquery(Long.class);
         Root<AutoFeatureEntity> featureRoot = subQuery.from(AutoFeatureEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-        if (!featureMap.get("fuelType").get("value").isEmpty()) {
-            String fuelType = featureMap.get("fuelType").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("fuelType"), fuelType));
-        }
-        if (!featureMap.get("engineCapacity").get("from").isEmpty()) {
-            int from = Integer.parseInt(featureMap.get("engineCapacity").get("from"));
-            int to = Integer.parseInt(featureMap.get("engineCapacity").get("to"));
-            predicates.add(criteriaBuilder.between(featureRoot.get("engineCapacity"), from, to));
-        }
-        if (!featureMap.get("mileage").get("from").isEmpty()) {
-            int from = Integer.parseInt(featureMap.get("mileage").get("from"));
-            int to = Integer.parseInt(featureMap.get("mileage").get("to"));
-            predicates.add(criteriaBuilder.between(featureRoot.get("mileage"), from, to));
-        }
-        if (!featureMap.get("autoCategory").get("value").isEmpty()) {
-            String autoCategory = featureMap.get("autoCategory").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("autoCategory"), autoCategory));
-        }
-        if (!featureMap.get("year").get("from").isEmpty()) {
-            int from = Integer.parseInt(featureMap.get("year").get("from"));
-            int to = Integer.parseInt(featureMap.get("year").get("to"));
-            predicates.add(criteriaBuilder.between(featureRoot.get("year"), from, to));
-        }
-        if (!featureMap.get("brand").get("value").isEmpty()) {
-            String brand = featureMap.get("brand").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("brand"), brand));
-        }
-        if (!featureMap.get("model").get("value").isEmpty()) {
-            String model = featureMap.get("model").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("model"), model));
-        }
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "fuelType", featureMap.get("fuelType")));
+        predicates.add(rangeNumberPredicate(criteriaBuilder, featureRoot, "engineCapacity", featureMap.get("engineCapacity")));
+        predicates.add(rangeNumberPredicate(criteriaBuilder, featureRoot, "mileage", featureMap.get("mileage")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "autoCategory", featureMap.get("autoCategory")));
+        predicates.add(rangeNumberPredicate(criteriaBuilder, featureRoot, "year", featureMap.get("year")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "brand", featureMap.get("brand")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "model", featureMap.get("model")));
+        predicates = predicates.stream().filter(Objects::nonNull).toList();
         subQuery.select(featureRoot.get("announcement"))
                 .where(predicates.toArray(new Predicate[predicates.size()]));
         return criteriaBuilder.in(root.get("id")).value(subQuery);
@@ -158,39 +128,15 @@ public class AnnouncementCustomSearchRepository {
         Subquery<Long> subQuery = query.subquery(Long.class);
         Root<TvFeatureEntity> featureRoot = subQuery.from(TvFeatureEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-        if (!featureMap.get("screenType").get("value").isEmpty()) {
-            String screenType = featureMap.get("screenType").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("screenType"), screenType));
-        }
-        if (!featureMap.get("resolution").get("value").isEmpty()) {
-            String resolution = featureMap.get("resolution").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("resolution"), resolution));
-        }
-        if (!featureMap.get("smartTv").get("value").isEmpty()) {
-            String smartTv = featureMap.get("smartTv").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("smartTv"), smartTv));
-        }
-        if (!featureMap.get("refreshRate").get("value").isEmpty()) {
-            String refreshRate = featureMap.get("refreshRate").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("refreshRate"), refreshRate));
-        }
-        if (!featureMap.get("diagonal").get("value").isEmpty()) {
-            String diagonal = featureMap.get("diagonal").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("diagonal"), diagonal));
-        }
-        if (!featureMap.get("year").get("from").isEmpty()) {
-            int from = Integer.parseInt(featureMap.get("year").get("from"));
-            int to = Integer.parseInt(featureMap.get("year").get("to"));
-            predicates.add(criteriaBuilder.between(featureRoot.get("year"), from, to));
-        }
-        if (!featureMap.get("brand").get("value").isEmpty()) {
-            String brand = featureMap.get("brand").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("brand"), brand));
-        }
-        if (!featureMap.get("model").get("value").isEmpty()) {
-            String model = featureMap.get("model").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("model"), model));
-        }
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "screenType", featureMap.get("screenType")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "resolution", featureMap.get("resolution")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "smartTv", featureMap.get("smartTv")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "refreshRate", featureMap.get("refreshRate")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "diagonal", featureMap.get("diagonal")));
+        predicates.add(rangeNumberPredicate(criteriaBuilder, featureRoot, "year", featureMap.get("year")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "brand", featureMap.get("brand")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "model", featureMap.get("model")));
+        predicates = predicates.stream().filter(Objects::nonNull).toList();
         subQuery.select(featureRoot.get("announcement"))
                 .where(predicates.toArray(new Predicate[predicates.size()]));
         return criteriaBuilder.in(root.get("id")).value(subQuery);
@@ -203,58 +149,40 @@ public class AnnouncementCustomSearchRepository {
         Subquery<Long> subQuery = query.subquery(Long.class);
         Root<ComputerFeatureEntity> featureRoot = subQuery.from(ComputerFeatureEntity.class);
         List<Predicate> predicates = new ArrayList<>();
-        if (!featureMap.get("diagonal").get("value").isEmpty()) {
-            String diagonal = featureMap.get("diagonal").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("diagonal"), diagonal));
-        }
-        if (!featureMap.get("graphicsCard").get("value").isEmpty()) {
-            String graphicsCard = featureMap.get("graphicsCard").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("graphicsCard"), graphicsCard));
-        }
-        if (!featureMap.get("hardDisk").get("from").isEmpty()) {
-            int from = Integer.parseInt(featureMap.get("year").get("from"));
-            int to = Integer.parseInt(featureMap.get("year").get("to"));
-            predicates.add(criteriaBuilder.between(featureRoot.get("hardDisk"), from, to));
-        }
-        if (!featureMap.get("hardDiskType").get("value").isEmpty()) {
-            String hardDiskType = featureMap.get("hardDiskType").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("hardDiskType"), hardDiskType));
-        }
-        if (!featureMap.get("processor").get("value").isEmpty()) {
-            String processor = featureMap.get("processor").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("processor"), processor));
-        }
-        if (!featureMap.get("ram").get("value").isEmpty()) {
-            String ram = featureMap.get("ram").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("ram"), ram));
-        }
-        if (!featureMap.get("resolution").get("value").isEmpty()) {
-            String resolution = featureMap.get("resolution").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("resolution"), resolution));
-        }
-        if (!featureMap.get("screenType").get("value").isEmpty()) {
-            String screenType = featureMap.get("screenType").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("screenType"), screenType));
-        }
-        if (!featureMap.get("computerType").get("value").isEmpty()) {
-            String computerType = featureMap.get("computerType").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("computerType"), computerType));
-        }
-        if (!featureMap.get("year").get("from").isEmpty()) {
-            int from = Integer.parseInt(featureMap.get("year").get("from"));
-            int to = Integer.parseInt(featureMap.get("year").get("to"));
-            predicates.add(criteriaBuilder.between(featureRoot.get("year"), from, to));
-        }
-        if (!featureMap.get("brand").get("value").isEmpty()) {
-            String brand = featureMap.get("brand").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("brand"), brand));
-        }
-        if (!featureMap.get("model").get("value").isEmpty()) {
-            String model = featureMap.get("model").get("value");
-            predicates.add(criteriaBuilder.equal(featureRoot.get("model"), model));
-        }
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "diagonal", featureMap.get("diagonal")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "graphicsCard", featureMap.get("graphicsCard")));
+        predicates.add(rangeNumberPredicate(criteriaBuilder, featureRoot, "hardDisk", featureMap.get("hardDisk")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "hardDiskType", featureMap.get("hardDiskType")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "processor", featureMap.get("processor")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "ram", featureMap.get("ram")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "resolution", featureMap.get("resolution")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "screenType", featureMap.get("screenType")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "computerType", featureMap.get("computerType")));
+        predicates.add(rangeNumberPredicate(criteriaBuilder, featureRoot, "year", featureMap.get("year")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "brand", featureMap.get("brand")));
+        predicates.add(valuePredicate(criteriaBuilder, featureRoot, "model", featureMap.get("model")));
+        predicates = predicates.stream().filter(Objects::nonNull).toList();
         subQuery.select(featureRoot.get("announcement"))
                 .where(predicates.toArray(new Predicate[predicates.size()]));
         return criteriaBuilder.in(root.get("id")).value(subQuery);
+    }
+
+    private Predicate rangeNumberPredicate(CriteriaBuilder criteriaBuilder, Root root, String property, Map<String, String> range) {
+        if (!range.get("from").isEmpty() || !range.get("to").isEmpty()) {
+            int from = range.get("from").isEmpty() ? 0 : Integer.parseInt(range.get("from"));
+            int to = range.get("to").isEmpty() ? Integer.MAX_VALUE : Integer.parseInt(range.get("to"));
+            return criteriaBuilder.between(root.get(property), from, to);
+        } else {
+            return null;
+        }
+    }
+
+    private Predicate valuePredicate(CriteriaBuilder criteriaBuilder, Root root, String property, Map<String, String> value) {
+        if (!value.get("value").isEmpty()) {
+            String model = value.get("value");
+            return criteriaBuilder.equal(root.get(property), model);
+        } else {
+            return null;
+        }
     }
 }

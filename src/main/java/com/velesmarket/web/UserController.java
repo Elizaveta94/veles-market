@@ -1,6 +1,8 @@
 package com.velesmarket.web;
 
+import com.velesmarket.domain.AnnouncementCardDto;
 import com.velesmarket.domain.UserDto;
+import com.velesmarket.service.AnnouncementService;
 import com.velesmarket.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -21,6 +24,7 @@ public class UserController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final AnnouncementService announcementService;
 
     @GetMapping("/registration")
     public String getRegistrationForm(Model model) {
@@ -31,7 +35,7 @@ public class UserController {
     @PostMapping("/registration")
     public String registrationSubmit(@ModelAttribute UserDto user, Model model) {
         UserDto newUser = userService.registrate(user);
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getLogin(),user.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getLogin(), user.getPassword());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return "redirect:/profile";
@@ -62,4 +66,10 @@ public class UserController {
         return "redirect:profile";
     }
 
+    @GetMapping("/user/announcement")
+    public String getUserAnnouncement(Principal principal, Model model) {
+        List<AnnouncementCardDto> announcements = announcementService.findByUser(principal.getName());
+        model.addAttribute("announcements", announcements);
+        return "userAnnouncement";
+    }
 }

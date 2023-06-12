@@ -25,9 +25,4 @@ public class MainController {
         model.addAttribute("categories", categories);
         return "mainPage";
     }
-
-    @GetMapping("/announcements")
-    public String getAnnouncement() {
-        return "announcement";
-    }
 }

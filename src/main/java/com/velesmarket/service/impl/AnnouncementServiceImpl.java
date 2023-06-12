@@ -132,6 +132,12 @@ public class AnnouncementServiceImpl implements AnnouncementService {
         return page.map(announcementMapper::mapToCardDto);
     }
 
+    @Override
+    public List<AnnouncementCardDto> findByUser(String userLogin) {
+        UserEntity userEntity = userRepository.findByLogin(userLogin).get();
+        return announcementRepository.findAllByUser(userEntity).stream().map(announcementMapper::mapToCardDto).toList();
+    }
+
     private void setAnnouncementToPhotos(AnnouncementEntity announcementEntity,
                                          List<PhotoAnnouncementEntity> photoAnnouncementEntities) {
         if (photoAnnouncementEntities != null && !photoAnnouncementEntities.isEmpty()) {
