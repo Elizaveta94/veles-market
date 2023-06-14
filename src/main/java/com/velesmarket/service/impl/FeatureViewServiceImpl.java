@@ -135,7 +135,7 @@ public class FeatureViewServiceImpl implements FeatureViewService {
                 Feature.builder()
                         .name("Processor")
                         .type(FeatureType.DROPDOWN)
-                        .values(ComputerHardDiskTypeF.getAllComputerHardDiskType())
+                        .values(ComputerProcessorF.getAllComputerProcessor())
                         .property("processor")
                         .build(),
                 Feature.builder()
