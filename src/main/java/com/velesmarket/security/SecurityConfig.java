@@ -53,7 +53,7 @@ public class SecurityConfig {
                         .usernameParameter("Login")
                         .passwordParameter("password")
                         .loginPage("/login")
-                        .failureHandler(new DebugErrorHandler())
+                        .failureUrl("/error")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
@@ -68,13 +68,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    static class DebugErrorHandler implements AuthenticationFailureHandler {
-
-        @Override
-        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-            System.out.println("error");
-        }
-    }
-
 }
