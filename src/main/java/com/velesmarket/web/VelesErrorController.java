@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
+
 @Controller
 @RequiredArgsConstructor
 public class VelesErrorController implements ErrorController {
